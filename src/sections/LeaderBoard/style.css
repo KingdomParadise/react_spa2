@@ -1,0 +1,26 @@
+.leader-board h1 {
+  font-size: 125px;
+  background: #ffefd1;
+  /* background: rgb(239, 255, 60); */
+  background: linear-gradient(
+    274deg,
+    rgba(239, 255, 60, 1) 0%,
+    rgba(255, 189, 60, 1) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+}
+
+.leader-head {
+  background-image: url(../../assets/images/leader-head-bg.png);
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 70px 0 30px;
+  border-radius: 10px;
+}
+.leader-head h2 {
+  color: #c0e7cb;
+}

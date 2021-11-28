@@ -1,0 +1,83 @@
+.marbles-question {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  background-color: #f3ba2f;
+  color: black;
+  font-size: 10px;
+  width: 20px;
+  height: 20px;
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.minecraft-dollor {
+  position: relative;
+}
+.minecraft-dollor::after,
+.minecraft-dollor::before {
+  position: absolute;
+  content: "";
+  height: 6px;
+  width: 10px;
+  left: 50%;
+
+  background-color: #fcec60;
+}
+.minecraft-dollor::after {
+  transform: translate(-50%, 100%);
+  top: 0;
+}
+.minecraft-dollor::before {
+  bottom: 0;
+  transform: translate(-50%, -100%);
+}
+
+.even,
+.odd {
+  background-size: cover;
+
+  background-repeat: no-repeat;
+  background-image: url(../../assets/images/EVEN_BG.png);
+  padding: 75px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-align: center;
+  font-size: 80px;
+  overflow: hidden;
+  box-shadow: 4px 38px 63px rgba(0, 0, 0, 0.5);
+}
+.even {
+  background-position: left bottom;
+}
+.odd {
+  background-image: url(../../assets/images/ODD_BG.png);
+  background-position: right bottom;
+}
+.or {
+  clip-path: polygon(
+    30% 0%,
+    70% 0%,
+    100% 30%,
+    100% 70%,
+    70% 100%,
+    30% 100%,
+    0% 70%,
+    0% 30%
+  );
+
+  background-color: #f3ba2f;
+  padding: 10px;
+  height: 60px;
+  width: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
