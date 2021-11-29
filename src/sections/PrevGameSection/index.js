@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+import { useRef } from "react";
 import { TinyBnb, TinyStar, TinyDollor } from "../../assets/svg";
 import dollor from "../../assets/images/CUSTOM_DOLLOR_TINY_green.png";
 import BnbWhite from "../../assets/images/BNBWHITE.png";
@@ -88,17 +89,28 @@ const data = [
 ];
 
 const PrevGame = () => {
+  const scrollContainer = useRef();
+  if (scrollContainer.current) {
+    console.log(scrollContainer.current);
+    scrollContainer.current.addEventListener("wheel", (evt) => {
+      evt.preventDefault();
+      scrollContainer.current.scrollLeft += evt.deltaY;
+    });
+  }
   return (
     <section className="prev-game">
       <div className="container">
         <h2 className="font-bold text-2xl"> Yours previous games</h2>
-        <div className="flex items-center mt-6 overflow-auto game-card-container">
+        <div
+          className="flex items-center mt-6 overflow-auto game-card-container"
+          ref={scrollContainer}
+        >
           {data.map((v, i) => (
             <div
+              key={i}
               className={`prev-game-card rounded-2xl mr-8 flex-shrink-0 ${
                 v.result[0].win ? "win" : ""
               }`}
-              key={i}
             >
               <div className="pb-2 pt-2 px-4 pr-24 bg-dark-700 rounded-t-2xl ">
                 <h4 className="font-bold text-3xl">Bet: {v.bet}</h4>

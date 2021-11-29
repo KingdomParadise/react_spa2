@@ -3,6 +3,7 @@ import { Layout } from "../components";
 import HeroSection from "../sections/HeroSection";
 import PrevGameSection from "../sections/PrevGameSection";
 import LeaderBoard from "../sections/LeaderBoard";
+
 import "./style.css";
 const Home = () => {
   return (

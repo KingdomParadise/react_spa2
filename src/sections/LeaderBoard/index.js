@@ -112,6 +112,7 @@ const PrevGame = () => {
         <div className="cards-wrapper mt-20 md:mt-0">
           {data.map((v, i) => (
             <div
+              key={i}
               className={`ml-1  rounded-3xl grid grid-cols-1 md:grid-cols-12 mt-8 relative winner-card text-brown ${
                 i + 1 === 1
                   ? "first py-8"
@@ -165,7 +166,7 @@ const PrevGame = () => {
                     <span>Score</span>
                   </p>
                   <p className="text-xl score">
-                    <i class="fas fa-star"></i>
+                    <i className="fas fa-star"></i>
                     <span className="inline-block ml-2 font-bold ">
                       {v.score - i * 10}
                     </span>
@@ -222,7 +223,7 @@ const PrevGame = () => {
           <div className="cards-wrapper-overlay  flex items-end justify-center">
             <a href="#" className="flex justify-center items-center">
               <p className="mr-2">See full leaderboard</p>
-              <i class="fas fa-arrow-right"></i>
+              <i className="fas fa-arrow-right"></i>
             </a>
           </div>
         </div>

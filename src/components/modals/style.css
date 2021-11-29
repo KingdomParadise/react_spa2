@@ -1,0 +1,88 @@
+.modal {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999999;
+  background-color: rgba(0, 0, 0, 0.4);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  padding: 0 16px;
+}
+.game-start-modal,
+.win-modal {
+  background-image: url(../../assets/images/game-start-modal-bg.png);
+  background-color: #1d181a;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.win-modal {
+  background-image: url(../../assets/images/win-modal-bg.jpg);
+  background-color: transparent;
+}
+.win-modal .modal-content {
+  background-image: url(../../assets/images/win-modal.jpg);
+}
+.win-modal .modal-content h2 {
+  max-width: 700px;
+  width: 100%;
+}
+.win-modal .modal-content .score p {
+  color: #38c669;
+}
+.modal-content {
+  max-width: 700px;
+  width: 100%;
+  background-color: #371c21;
+  min-height: 500px;
+  border-radius: 30px;
+  background-image: url(../../assets/images/game-start-modal.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.modal-content h2 {
+  font-size: 55px;
+  line-height: 87%;
+  max-width: 500px;
+  width: 90%;
+  /* margin: auto; */
+  margin-right: auto;
+  margin-left: auto;
+}
+.close-modal {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 20px;
+}
+.close-modal i {
+  cursor: pointer;
+}
+@media (max-width: 768px) {
+  .modal-content h2 {
+    font-size: 35px;
+  }
+  .win-modal .modal-content h2 {
+    font-size: 40px;
+  }
+  .game-start-modal .modal-content {
+    background-image: url(../../assets/images/game-start-modal-mobile.png);
+    padding-bottom: 250px;
+  }
+  .close-modal {
+    top: -10%;
+    right: 0;
+    background-color: white;
+    color: gray;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+  }
+}

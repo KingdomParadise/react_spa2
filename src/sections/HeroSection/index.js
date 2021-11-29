@@ -9,6 +9,8 @@ import TinyBnbImg from "../../assets/images/BNB_TINY.svg";
 import TinyBnbImgBlack from "../../assets/images/BNB_TINY_BLACK.svg";
 import TinyDoller2 from "../../assets/images/CUSTOM_DOLLOR_TINY.png";
 import TinyDoller2Black from "../../assets/images/CUSTOM_DOLLOR_TINY_BLACK.png";
+import GameStartModal from "../../components/modals/GameStartModal";
+import WinModal from "../../components/modals/WinModal";
 import "./style.css";
 
 const data = [
@@ -31,6 +33,11 @@ const data = [
 
 const HeroSection = () => {
   const [currentActive, setCurrentActive] = useState(0);
+  const [activeGame, setActiveGame] = useState(false);
+
+  const gameHandler = () => {
+    setActiveGame((prev) => !prev);
+  };
 
   const activeHandler = (i) => {
     setCurrentActive(i);
@@ -56,10 +63,10 @@ const HeroSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-20 relative">
-          <div className="even  ">
+          <div className="even" role="button" onClick={gameHandler}>
             <p>Even</p>
           </div>
-          <div className="odd">
+          <div className="odd" role="button" onClick={gameHandler}>
             <p>Odd</p>
           </div>
           <div className="or hidden md:flex">
@@ -79,7 +86,7 @@ const HeroSection = () => {
                 onClick={() => activeHandler(i)}
               >
                 <div className="tick">
-                  <i class="fas fa-check"></i>
+                  <i className="fas fa-check"></i>
                 </div>
                 <div
                   className={`flex  flex-col md:flex-row md:items-center px-4 py-2  pr-3  border-b  ${
@@ -122,6 +129,16 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+      {/* <GameStartModal
+        activeGame={activeGame}
+        setActiveGame={setActiveGame}
+        gameHandler={gameHandler}
+      /> */}
+      <WinModal
+        activeGame={activeGame}
+        setActiveGame={setActiveGame}
+        gameHandler={gameHandler}
+      />
     </section>
   );
 };

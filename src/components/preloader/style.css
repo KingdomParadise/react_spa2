@@ -1,0 +1,45 @@
+.preloader {
+  background-color: #18191d;
+  background-image: url(../../assets/images/preloader-bg.jpg);
+  background-position: center center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  overflow: hidden;
+}
+.preloader .title {
+  font-size: 96px;
+  background: black;
+  line-height: 110%;
+  background: linear-gradient(
+    266deg,
+    rgba(255, 47, 47, 1) 0%,
+    rgba(255, 47, 147, 0.4) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bold;
+  max-width: 800px;
+  margin: auto;
+  text-align: center;
+  margin: 20px 0;
+}
+.preloader p {
+  max-width: 400px;
+  margin: auto;
+  text-align: center;
+}
+.progress-content {
+  width: 0%;
+  animation: progress 6s linear infinite;
+}
+
+@keyframes progress {
+  0% {
+    width: 0%;
+  }
+  100% {
+    width: 100%;
+  }
+}
