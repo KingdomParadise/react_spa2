@@ -16,10 +16,14 @@ module.exports = {
           DEFAULT: "#FCEC60",
           dark: "#FFD231",
         },
+        brown: "#584D14",
       },
       borderColor: {
         dark: {
           400: "#1E222B",
+        },
+        yellow: {
+          400: "#DEA120",
         },
       },
       container: {

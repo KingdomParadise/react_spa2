@@ -1,3 +1,13 @@
+.hero-section {
+  background-image: url(../../assets/images/hero-bg.png);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+/* @media (max-width: 768px) {
+  .hero-section {
+  }
+} */
 .marbles-question {
   position: absolute;
   top: 0;
@@ -48,9 +58,30 @@
   font-size: 80px;
   overflow: hidden;
   box-shadow: 4px 38px 63px rgba(0, 0, 0, 0.5);
+  transition: all 0.5s;
+  cursor: pointer;
 }
 .even {
   background-position: left bottom;
+}
+.even:hover {
+  animation: backgroundIMG 0.5s ease-in-out 0.5s;
+  animation-fill-mode: forwards;
+}
+
+@keyframes backgroundIMG {
+  100% {
+    background-image: url(../../assets/images/EVEN_BG-HOVER.png);
+  }
+}
+.odd:hover {
+  animation: backgroundIMG2 0.5s ease-in-out 0.5s;
+  animation-fill-mode: forwards;
+}
+@keyframes backgroundIMG2 {
+  100% {
+    background-image: url(../../assets/images/ODD_BG-HOVER.png);
+  }
 }
 .odd {
   background-image: url(../../assets/images/ODD_BG.png);
@@ -77,7 +108,32 @@
   left: 50%;
   transform: translate(-50%, -50%);
   color: black;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.select-bnb.active {
+  background-color: #ffae02;
+  color: black;
+  font-weight: bold;
+}
+.tick {
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 35px;
   display: flex;
   justify-content: center;
   align-items: center;
+  color: #ffae02;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(30%, -30%);
+  display: none;
+}
+
+.select-bnb.active .tick {
+  display: flex;
 }

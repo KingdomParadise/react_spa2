@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { TinyBnb, TinyStar, TinyDollor } from "../../assets/svg";
 import dollor from "../../assets/images/CUSTOM_DOLLOR_TINY_green.png";
+import BnbWhite from "../../assets/images/BNBWHITE.png";
 import "./style.css";
 
 const data = [
@@ -97,11 +98,12 @@ const PrevGame = () => {
               className={`prev-game-card rounded-2xl mr-8 flex-shrink-0 ${
                 v.result[0].win ? "win" : ""
               }`}
+              key={i}
             >
               <div className="pb-2 pt-2 px-4 pr-24 bg-dark-700 rounded-t-2xl ">
                 <h4 className="font-bold text-3xl">Bet: {v.bet}</h4>
                 <div className="flex items-center">
-                  <TinyBnb />
+                  <img src={BnbWhite} alt="" />
                   <p className="text-base font-bold mx-1">{v.bnb} BNB</p>
                   <span>~512 SQM</span>
                 </div>
@@ -110,7 +112,7 @@ const PrevGame = () => {
                 <div className="prev-game-card-btm pb-2 pt-2 px-4 w-full">
                   <p className="font-bold text-base">Result</p>
                   <div className="flex items items-center text-xs mt-1">
-                    <i class="far fa-clock"></i>
+                    <i className="far fa-clock"></i>
                     <p className="ml-1">Pending</p>
                   </div>
                 </div>

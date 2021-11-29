@@ -4,3 +4,20 @@
   border-radius: 35px;
   background-color: #1f1f25;
 }
+
+.metamask-mobile {
+  background-color: #26272d;
+  padding: 10px 16px;
+  border-radius: 35px;
+}
+.select .MuiOutlinedInput-notchedOutline {
+  border-color: white;
+  border-radius: 30px;
+}
+
+.select .MuiSvgIcon-root {
+  fill: white;
+}
+body .MuiList-root.MuiList-padding.MuiMenu-list {
+  background-color: #000;
+}
