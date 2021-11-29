@@ -11,6 +11,8 @@ import TinyDoller2 from "../../assets/images/CUSTOM_DOLLOR_TINY.png";
 import TinyDoller2Black from "../../assets/images/CUSTOM_DOLLOR_TINY_BLACK.png";
 import GameStartModal from "../../components/modals/GameStartModal";
 import WinModal from "../../components/modals/WinModal";
+import LostModal from "../../components/modals/LostModal";
+import NoMarbleModal from "../../components/modals/NoMarbleModal";
 import "./style.css";
 
 const data = [
@@ -34,13 +36,40 @@ const data = [
 const HeroSection = () => {
   const [currentActive, setCurrentActive] = useState(0);
   const [activeGame, setActiveGame] = useState(false);
+  const [winGame, setWinGame] = useState(false);
+  const [lossGame, setLossGame] = useState(false);
+  const [noMarbleGame, setNoMarbleGame] = useState(false);
 
   const gameHandler = () => {
     setActiveGame((prev) => !prev);
   };
+  const winHandler = () => {
+    setWinGame((prev) => !prev);
+  };
+  const lossHandler = () => {
+    setLossGame((prev) => !prev);
+  };
+  const noMarbleHandler = () => {
+    setNoMarbleGame((prev) => !prev);
+  };
 
   const activeHandler = (i) => {
     setCurrentActive(i);
+  };
+
+  const oddHandler = () => {
+    setActiveGame((prev) => !prev);
+    setTimeout(() => {
+      setActiveGame((prev) => !prev);
+      setWinGame((prev) => !prev);
+    }, 3000);
+  };
+  const evenHandler = () => {
+    setLossGame((prev) => !prev);
+    setTimeout(() => {
+      setLossGame((prev) => !prev);
+      setNoMarbleGame((prev) => !prev);
+    }, 3000);
   };
 
   return (
@@ -63,10 +92,10 @@ const HeroSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-20 relative">
-          <div className="even" role="button" onClick={gameHandler}>
+          <div className="even" role="button" onClick={evenHandler}>
             <p>Even</p>
           </div>
-          <div className="odd" role="button" onClick={gameHandler}>
+          <div className="odd" role="button" onClick={oddHandler}>
             <p>Odd</p>
           </div>
           <div className="or hidden md:flex">
@@ -75,7 +104,7 @@ const HeroSection = () => {
         </div>
 
         <div className="mt-20  flex lg:items-center lg:justify-between flex-col  lg:flex-row">
-          <p className="text-yellow text-2xl">Select BNb ammount</p>
+          <p className="text-yellow text-2xl font-bold">Select BNb amount</p>
           <div className="grid grid-cols-3 gap-4 items-center justify-between lg:my-0 my-8">
             {data.map((v, i) => (
               <div
@@ -129,15 +158,25 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
-      {/* <GameStartModal
+      <GameStartModal
         activeGame={activeGame}
         setActiveGame={setActiveGame}
         gameHandler={gameHandler}
-      /> */}
+      />
       <WinModal
-        activeGame={activeGame}
-        setActiveGame={setActiveGame}
-        gameHandler={gameHandler}
+        activeGame={winGame}
+        setActiveGame={setWinGame}
+        gameHandler={winHandler}
+      />
+      <LostModal
+        activeGame={lossGame}
+        setActiveGame={setLossGame}
+        gameHandler={lossHandler}
+      />
+      <NoMarbleModal
+        activeGame={noMarbleGame}
+        setActiveGame={setNoMarbleGame}
+        gameHandler={noMarbleHandler}
       />
     </section>
   );

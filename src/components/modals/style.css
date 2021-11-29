@@ -12,7 +12,9 @@
   padding: 0 16px;
 }
 .game-start-modal,
-.win-modal {
+.win-modal,
+.lost-modal,
+.no-marble-modal {
   background-image: url(../../assets/images/game-start-modal-bg.png);
   background-color: #1d181a;
   justify-content: center;
@@ -23,15 +25,36 @@
   background-image: url(../../assets/images/win-modal-bg.jpg);
   background-color: transparent;
 }
+.lost-modal {
+  background-image: url(../../assets/images/lost-modal-bg.jpg);
+}
+.no-marble-modal {
+  background-image: url(../../assets/images/no-marble-modal-bg.png);
+}
+.no-marble-modal .modal-content {
+  background-image: url(../../assets/images/no-marble-modal.png);
+}
+.lost-modal .modal-content {
+  background-image: url(../../assets/images/lost-modal.png);
+}
 .win-modal .modal-content {
   background-image: url(../../assets/images/win-modal.jpg);
 }
-.win-modal .modal-content h2 {
+
+.win-modal .modal-content h2,
+.lost-modal .modal-content h2,
+.no-marble-modal .modal-content h2 {
   max-width: 700px;
   width: 100%;
 }
 .win-modal .modal-content .score p {
   color: #38c669;
+}
+.lost-modal .modal-content .score p {
+  color: #ff274e;
+}
+.no-marble-modal .modal-content .score p {
+  color: #fcec60;
 }
 .modal-content {
   max-width: 700px;
@@ -66,7 +89,8 @@
   .modal-content h2 {
     font-size: 35px;
   }
-  .win-modal .modal-content h2 {
+  .win-modal .modal-content h2,
+  .lost-modal .modal-content h2 {
     font-size: 40px;
   }
   .game-start-modal .modal-content {
