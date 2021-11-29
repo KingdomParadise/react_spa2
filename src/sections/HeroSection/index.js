@@ -92,10 +92,21 @@ const HeroSection = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-20 relative">
-          <div className="even" role="button" onClick={evenHandler}>
+          <div
+            className="even"
+            role="button"
+            onClick={evenHandler}
+            data-aos="fade-up"
+          >
             <p>Even</p>
           </div>
-          <div className="odd" role="button" onClick={oddHandler}>
+          <div
+            className="odd"
+            role="button"
+            onClick={oddHandler}
+            data-aos="fade-up"
+            data-aos-delay="400"
+          >
             <p>Odd</p>
           </div>
           <div className="or hidden md:flex">
