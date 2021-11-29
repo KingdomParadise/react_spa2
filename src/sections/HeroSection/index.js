@@ -73,7 +73,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="bg-dark-500  min-h-screen pb-14 hero-section">
+    <section className="bg-dark-500 pb-14 hero-section">
       <Header />
       <div className="container">
         <div className="mx-auto flex items-center justify-center w-full my-10 md:my-4">
