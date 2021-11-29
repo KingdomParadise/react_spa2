@@ -7,7 +7,11 @@ import LeaderBoard from "../sections/LeaderBoard";
 import "./style.css";
 const Home = () => {
   return (
-    <div data-aos="fade-out" data-aos-delay="200" className="bg-dark-700">
+    <div
+      // data-aos="fade-out"
+      // data-aos-delay="200"
+      className="bg-dark-700"
+    >
       <Layout>
         <HeroSection />
         <div className="py-20 bg-dark-700 bottom-section">

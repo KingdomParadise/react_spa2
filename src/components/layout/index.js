@@ -4,9 +4,9 @@ import React from "react";
 
 const Index = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen ">
+    <div className="">
       {/* <Header /> */}
-      <div className="flex-1 layout">{children}</div>
+      <div className="">{children}</div>
       {/* <Footer /> */}
     </div>
   );
