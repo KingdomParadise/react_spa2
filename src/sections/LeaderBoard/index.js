@@ -206,7 +206,7 @@ const PrevGame = () => {
                   </p>
                 </div>
                 <p className="hidden md:block  text-xl score">
-                  <i class="fas fa-star"></i>
+                  <i className="fas fa-star"></i>
                   <span className="inline-block ml-2 font-bold ">
                     {v.score - i * 10}
                   </span>

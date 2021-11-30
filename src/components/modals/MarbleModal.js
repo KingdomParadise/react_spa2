@@ -77,7 +77,7 @@ const LeaderCard = () => (
     </div>
     <div className="flex mt-8 md:mt-0 md:col-span-6  items-center md:pr-4 max-w-sm  justify-between w-11/12 mx-auto md:mx-auto md:w-full md:max-w-none">
       <p className="hidden md:block text-xs score">
-        <i class="fas fa-star"></i>
+        <i className="fas fa-star"></i>
         <span
           className="inline-block ml-2 font-bold  text-xs"
           style={{ fontSize: 10 }}
