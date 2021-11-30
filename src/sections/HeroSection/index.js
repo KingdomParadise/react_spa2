@@ -13,6 +13,7 @@ import GameStartModal from "../../components/modals/GameStartModal";
 import WinModal from "../../components/modals/WinModal";
 import LostModal from "../../components/modals/LostModal";
 import NoMarbleModal from "../../components/modals/NoMarbleModal";
+import MarbleModal from "../../components/modals/MarbleModal";
 import "./style.css";
 
 const data = [
@@ -39,6 +40,7 @@ const HeroSection = () => {
   const [winGame, setWinGame] = useState(false);
   const [lossGame, setLossGame] = useState(false);
   const [noMarbleGame, setNoMarbleGame] = useState(false);
+  const [marbleGame, setMarbleGame] = useState(false);
 
   const gameHandler = () => {
     setActiveGame((prev) => !prev);
@@ -51,6 +53,9 @@ const HeroSection = () => {
   };
   const noMarbleHandler = () => {
     setNoMarbleGame((prev) => !prev);
+  };
+  const marbleHandler = () => {
+    setMarbleGame((prev) => !prev);
   };
 
   const activeHandler = (i) => {
@@ -78,7 +83,10 @@ const HeroSection = () => {
         <Header />
         <div className="container">
           <div className="mx-auto flex items-center justify-center w-full my-10 md:my-4">
-            <div className="relative">
+            <div
+              className=" cursor-pointer marble-popup-parent relative"
+              onClick={marbleHandler}
+            >
               <div className="marbles-question">
                 <i className="fas fa-question"></i>
               </div>
@@ -194,6 +202,11 @@ const HeroSection = () => {
         activeGame={noMarbleGame}
         setActiveGame={setNoMarbleGame}
         gameHandler={noMarbleHandler}
+      />
+      <MarbleModal
+        activeGame={marbleGame}
+        setActiveGame={setMarbleGame}
+        gameHandler={marbleHandler}
       />
     </>
   );

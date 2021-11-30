@@ -53,6 +53,17 @@
   width: 90px;
   height: 90px;
 }
+.first.first-mini .rank-tag {
+  width: 35px;
+  height: 35px;
+  border-radius: 4px;
+}
+.first.first-mini .rank-tag-inner {
+  border-radius: 4px;
+}
+.first.first-mini .rank-tag-inner {
+  font-size: 10px;
+}
 .rank-tag {
   border-radius: 10px 10px 0 10px;
   position: absolute;

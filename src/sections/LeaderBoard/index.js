@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
+import { useState } from "react";
 import GreenTag from "../../assets/images/GreenTag.png";
 import RedTag from "../../assets/images/RedTag.png";
 import Winner1 from "../../assets/images/winner1.png";
@@ -68,9 +69,41 @@ const data = [
     score: 1039,
     payout: 5_536,
   },
+  {
+    account: "0x8Df64...0E3dEB7F7B6",
+    score: 1039,
+    payout: 5_536,
+  },
+  {
+    account: "0x8Df64...0E3dEB7F7B6",
+    score: 1039,
+    payout: 5_536,
+  },
+  {
+    account: "0x8Df64...0E3dEB7F7B6",
+    score: 1039,
+    payout: 5_536,
+  },
+  {
+    account: "0x8Df64...0E3dEB7F7B6",
+    score: 1039,
+    payout: 5_536,
+  },
+  {
+    account: "0x8Df64...0E3dEB7F7B6",
+    score: 1039,
+    payout: 5_536,
+  },
+  {
+    account: "0x8Df64...0E3dEB7F7B6",
+    score: 1039,
+    payout: 5_536,
+  },
 ];
 
 const PrevGame = () => {
+  const [currentView, setCurrentView] = useState(10);
+
   return (
     <section className="leader-board py-20">
       <div className="container text-center">
@@ -92,7 +125,7 @@ const PrevGame = () => {
               </div>
             </div>
           </div>
-          <h2 className="font-mineCraft text-4xl md:text-5xl uppercase leading-10">
+          <h2 className="font-mineCraft text-4xl md:text-6xl uppercase leading-10">
             200,000 usd in prizes
           </h2>
           <p className="text-yellow text-base  md:text-2xl mt-4">
@@ -110,7 +143,7 @@ const PrevGame = () => {
           </div>
         </div>
         <div className="cards-wrapper mt-20 md:mt-0">
-          {data.map((v, i) => (
+          {data.slice(0, currentView).map((v, i) => (
             <div
               key={i}
               className={`ml-1  rounded-3xl grid grid-cols-1 md:grid-cols-12 mt-8 relative winner-card text-brown ${
@@ -161,7 +194,7 @@ const PrevGame = () => {
                 </p>
               </div>
               <div className="flex mt-8 md:mt-0 md:col-span-6 lg:col-span-5 items-center md:pr-4 max-w-sm  justify-between w-11/12 mx-auto md:mx-auto md:w-full md:max-w-none">
-                <div>
+                <div className="md:hidden">
                   <p className=" text-left mb-1 uppercase font-bold text-sm score">
                     <span>Score</span>
                   </p>
@@ -172,13 +205,13 @@ const PrevGame = () => {
                     </span>
                   </p>
                 </div>
-                {/* <p className="  text-xl score">
+                <p className="hidden md:block  text-xl score">
                   <i class="fas fa-star"></i>
                   <span className="inline-block ml-2 font-bold ">
                     {v.score - i * 10}
                   </span>
-                </p> */}
-                <div>
+                </p>
+                <div className="md:hidden">
                   <p className=" text-left mb-1 uppercase font-bold text-sm payout">
                     Estimated Payout
                   </p>
@@ -200,7 +233,7 @@ const PrevGame = () => {
                     </span>
                   </p>
                 </div>
-                {/* <p className="text-xl flex items-center justify-end flex-1 payout">
+                <p className="hidden md:flex text-xl  items-center justify-end flex-1 payout">
                   <img
                     src={
                       i + 1 === 1
@@ -216,15 +249,22 @@ const PrevGame = () => {
                   <span className="inline-block ml-2 font-bold ">
                     ${v.payout - i * 100} $SQM
                   </span>
-                </p> */}
+                </p>
               </div>
             </div>
           ))}
-          <div className="cards-wrapper-overlay  flex items-end justify-center">
-            <a href="#" className="flex justify-center items-center">
+          <div
+            className={`cards-wrapper-overlay  ${
+              currentView === data.length ? "hidden" : "flex"
+            } items-end justify-center`}
+          >
+            <button
+              className={` flex justify-center items-center`}
+              onClick={() => setCurrentView(data.length)}
+            >
               <p className="mr-2">See full leaderboard</p>
-              <i className="fas fa-arrow-right"></i>
-            </a>
+              <i className="fas fa-arrow-down"></i>
+            </button>
           </div>
         </div>
       </div>

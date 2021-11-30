@@ -21,6 +21,7 @@
 }
 .game-card-container {
   padding-bottom: 10px;
+  position: relative;
 }
 .game-card-container::-webkit-scrollbar {
   height: 4px;
@@ -37,3 +38,32 @@
   outline: 1px solid #353945;
   border-radius: 10px;
 }
+.prev-game .container::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background: rgb(20, 20, 22);
+  background: linear-gradient(
+    266deg,
+    rgba(20, 20, 22, 1) 0%,
+    rgba(20, 20, 22, 0.9) 30%,
+    rgba(20, 20, 22, 0) 100%
+  );
+  width: 10%;
+}
+/* .game-card-container::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  background: rgb(20, 20, 22);
+  background: linear-gradient(
+    266deg,
+    rgba(20, 20, 22, 1) 0%,
+    rgba(20, 20, 22, 0) 100%
+  );
+  width: 10%;
+} */

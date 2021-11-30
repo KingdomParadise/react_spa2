@@ -99,7 +99,7 @@ const PrevGame = () => {
   }
   return (
     <section className="prev-game">
-      <div className="container">
+      <div className="container relative">
         <h2 className="font-bold text-2xl"> Yours previous games</h2>
         <div
           className="flex items-center mt-6 overflow-auto game-card-container"

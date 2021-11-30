@@ -58,14 +58,14 @@
   font-size: 80px;
   overflow: hidden;
   box-shadow: 4px 38px 63px rgba(0, 0, 0, 0.5);
-  transition: all 0.5s;
+  transition: all 0.3s;
   cursor: pointer;
 }
 .even {
   background-position: left bottom;
 }
 .even:hover {
-  animation: backgroundIMG 0.5s ease-in-out 0.5s;
+  animation: backgroundIMG 0.3s ease-in-out 0.3s;
   animation-fill-mode: forwards;
 }
 
@@ -75,7 +75,7 @@
   }
 }
 .odd:hover {
-  animation: backgroundIMG2 0.5s ease-in-out 0.5s;
+  animation: backgroundIMG2 0.3s ease-in-out 0.3s;
   animation-fill-mode: forwards;
 }
 @keyframes backgroundIMG2 {
