@@ -124,7 +124,7 @@ const HeroSection = () => {
           </div>
 
           <div className="mt-20  flex lg:items-center lg:justify-between flex-col  lg:flex-row">
-            <p className="text-yellow text-2xl font-bold">Select BNb amount</p>
+            <p className="text-yellow text-2xl font-bold">Select BNB amount</p>
             <div className="grid grid-cols-3 gap-4 items-center justify-between lg:my-0 my-8">
               {data.map((v, i) => (
                 <div
