@@ -76,10 +76,10 @@ const HeroSection = () => {
   };
   const evenHandler = () => {
     setLossGame((prev) => !prev);
-    setTimeout(() => {
-      setLossGame((prev) => !prev);
-      setNoMarbleGame((prev) => !prev);
-    }, 3000);
+    // setTimeout(() => {
+    //   setLossGame((prev) => !prev);
+    //   setNoMarbleGame((prev) => !prev);
+    // }, 3000);
   };
 
   return (

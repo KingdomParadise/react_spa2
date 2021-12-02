@@ -39,7 +39,8 @@
   background-image: url(../../assets/images/no-marble-modal.png);
 }
 .lost-modal .modal-content {
-  background-image: url(../../assets/images/lost-modal.png);
+  background-image: none;
+  background-color: #371c21;
 }
 .win-modal .modal-content {
   background-image: none;
@@ -166,21 +167,32 @@
   }
 }
 
-.win-modal .modal-content {
+.win-modal .modal-content,
+.lost-modal .modal-content {
   position: relative;
   overflow: hidden;
 }
-.win-modal .modal-content .gif {
+.win-modal .modal-content .gif,
+.lost-modal .modal-content .gif {
   position: absolute;
   top: -15px;
   left: 50%;
   transform: translateX(-50%);
 }
 
-.win-modal .modal-content .gif-overlay {
+.win-modal .modal-content .gif-overlay,
+.lost-modal .modal-content .gif-overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.win-modal-btm,
+.lost-modal-btm {
+  position: absolute;
+  bottom: 15%;
+  left: 0;
+  width: 100%;
 }
