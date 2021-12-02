@@ -160,7 +160,7 @@ const Index = () => {
               <i className="fab fa-twitter"></i>
             </a>
             <a href="#">
-              <i class="fab fa-telegram-plane"></i>
+              <i className="fab fa-telegram-plane"></i>
             </a>
           </div>
         </div>
