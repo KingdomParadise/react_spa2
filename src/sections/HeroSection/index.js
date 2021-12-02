@@ -14,8 +14,13 @@ import WinModal from "../../components/modals/WinModal";
 import LostModal from "../../components/modals/LostModal";
 import NoMarbleModal from "../../components/modals/NoMarbleModal";
 import MarbleModal from "../../components/modals/MarbleModal";
+import YellowThunder from "../../assets/images/yellow-thunder.png";
+import EvenBg from "../../assets/images/EVEN_BG.png";
+import EvenBgHover from "../../assets/images/EVEN_BG-HOVER.png";
+import OddBg from "../../assets/images/ODD_BG.png";
+import OddBgHover from "../../assets/images/ODD_BG-HOVER.png";
 import "./style.css";
-
+import CountUp from "react-countup";
 const data = [
   {
     bnb: "1 BNB",
@@ -41,7 +46,7 @@ const HeroSection = () => {
   const [lossGame, setLossGame] = useState(false);
   const [noMarbleGame, setNoMarbleGame] = useState(false);
   const [marbleGame, setMarbleGame] = useState(false);
-
+  const [active, setActive] = useState(false);
   const gameHandler = () => {
     setActiveGame((prev) => !prev);
   };
@@ -82,7 +87,7 @@ const HeroSection = () => {
       <section className="bg-dark-500  min-h-screen pb-14 hero-section relative">
         <Header />
         <div className="container">
-          <div className="mx-auto flex items-center justify-center w-full my-10 md:my-4">
+          <div className="mx-auto hidden lg:flex items-center justify-center w-full my-10 md:my-4">
             <div
               className=" cursor-pointer marble-popup-parent relative"
               onClick={marbleHandler}
@@ -95,18 +100,22 @@ const HeroSection = () => {
             <p className="font-medium text-2xl ml-3">Marbles</p>
           </div>
           <div>
-            <h1 className="font-mineCraft text-4xl mx-auto text-center text-yellow my-8">
-              <span className="minecraft-dollor">S</span> 200,000 USD IN PRIZES
+            <h1 className="font-mineCraft text-4xl mx-auto text-center hidden lg:block text-yellow my-8">
+              <span className="minecraft-dollor">S</span>{" "}
+              <CountUp end={200000} duration={2} /> USD IN PRIZES
             </h1>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-20 relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative">
             <div
               className="even"
               role="button"
               onClick={evenHandler}
               data-aos="fade-up"
             >
+              <img src={EvenBg} alt="" className="w-full even-bg" />
+              <img src={EvenBgHover} alt="" className="w-full even-hover" />
+
               <p>Even</p>
             </div>
             <div
@@ -116,6 +125,9 @@ const HeroSection = () => {
               data-aos="fade-up"
               data-aos-delay="400"
             >
+              <img src={OddBg} alt="" className="w-full odd-bg" />
+              <img src={OddBgHover} alt="" className="w-full odd-hover" />
+
               <p>Odd</p>
             </div>
             <div className="or hidden md:flex">
@@ -123,7 +135,7 @@ const HeroSection = () => {
             </div>
           </div>
 
-          <div className="mt-20  flex lg:items-center lg:justify-between flex-col  lg:flex-row">
+          <div className="mt-16  flex lg:items-center lg:justify-between flex-col  lg:flex-row">
             <p className="text-yellow text-2xl font-bold">Select BNB amount</p>
             <div className="grid grid-cols-3 gap-4 items-center justify-between lg:my-0 my-8">
               {data.map((v, i) => (
@@ -177,8 +189,16 @@ const HeroSection = () => {
                 </div>
               ))}
             </div>
-            <div className="border border-white flex items-center p-4 lg:py-7 lg:px-6 rounded-xl cursor-pointer justify-center">
-              <Thunder /> <p className="ml-2">Enable Quickplay</p>
+            <div
+              onClick={() => setActive((prev) => !prev)}
+              className={`border ${
+                active ? " border-yellow" : " border-white "
+              } flex items-center p-4 lg:py-7 lg:px-6 rounded-xl cursor-pointer justify-center transition-all`}
+            >
+              {active ? <img src={YellowThunder} alt="" /> : <Thunder />}{" "}
+              <p className={`${active ? "text-yellow" : ""}  select-none ml-2`}>
+                Enable Quickplay
+              </p>
             </div>
           </div>
         </div>

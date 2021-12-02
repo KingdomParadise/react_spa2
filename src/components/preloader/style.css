@@ -45,6 +45,13 @@
 }
 @media (max-width: 768px) {
   .preloader .title {
-    font-size: 40px;
+    font-size: 48px;
+    max-width: 370px;
+    margin-right: auto;
+    margin-left: auto;
+    width: 100%;
+  }
+  .preloader .title span {
+    display: block;
   }
 }

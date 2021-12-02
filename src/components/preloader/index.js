@@ -4,15 +4,19 @@ import Logo from "../../assets/images/LOGO_DESKTOP.png";
 const Index = () => {
   return (
     <div className="flex preloader" data-aos="zoom-out">
-      <div className="flex justify-center items-center w-full h-full">
+      <div className="flex justify-center mt-10 md:mt-0 md:items-center w-full h-full">
         <div>
           <div data-aos="fade-up" data-aos-delay="700">
             <img src={Logo} alt="" className=" mx-auto" />
           </div>
           <h2 className="title" data-aos="fade-up" data-aos-delay="700">
-            #SQM Present the first game
+            <span>#SQM</span> Present the first game
           </h2>
-          <p data-aos="fade-up" data-aos-delay="700">
+          <p
+            data-aos="fade-up"
+            data-aos-delay="700"
+            className="text-xl font-medium"
+          >
             Place your bet in BNB then guess if there is an even number or odd
             number of marbles.
           </p>

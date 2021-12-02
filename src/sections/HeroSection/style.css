@@ -47,11 +47,7 @@
 
 .even,
 .odd {
-  background-size: cover;
-
-  background-repeat: no-repeat;
-  background-image: url(../../assets/images/EVEN_BG.png);
-  padding: 75px;
+  padding: 120px 10px;
   border-radius: 30px;
   font-weight: bold;
   text-align: center;
@@ -60,13 +56,42 @@
   box-shadow: 4px 38px 63px rgba(0, 0, 0, 0.5);
   transition: all 0.3s;
   cursor: pointer;
+  position: relative;
 }
-.even {
-  background-position: left bottom;
+.even p,
+.odd p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
-.even:hover {
-  animation: backgroundIMG 0.3s ease-in-out 0.3s;
-  animation-fill-mode: forwards;
+.even-hover,
+.odd-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: opacity linear 0.3s;
+}
+.even-bg,
+.odd-bg {
+  transition: opacity linear 0.3s;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.even:hover .even-bg,
+.odd:hover .odd-bg {
+  opacity: 0;
+}
+.even:hover .even-hover,
+.odd:hover .odd-hover {
+  opacity: 1;
 }
 
 @keyframes backgroundIMG {
@@ -75,8 +100,7 @@
   }
 }
 .odd:hover {
-  animation: backgroundIMG2 0.3s ease-in-out 0.3s;
-  animation-fill-mode: forwards;
+  background-image: url(../../assets/images/ODD_BG-HOVER.png);
 }
 @keyframes backgroundIMG2 {
   100% {

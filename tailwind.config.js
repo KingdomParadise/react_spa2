@@ -23,7 +23,7 @@ module.exports = {
           400: "#1E222B",
         },
         yellow: {
-          400: "#DEA120",
+          DEFAULT: "#FCEC60",
         },
       },
       container: {

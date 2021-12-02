@@ -20,7 +20,7 @@
   fill: #38c669;
 }
 .game-card-container {
-  padding-bottom: 10px;
+  padding-bottom: 40px;
   position: relative;
 }
 .game-card-container::-webkit-scrollbar {
