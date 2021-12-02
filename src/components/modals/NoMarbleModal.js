@@ -1,5 +1,6 @@
 import "./style.css";
-
+import Gif from "../../assets/images/no-marbles2.gif";
+import GifOverlay from "../../assets/images/no-marbles-overlay.png";
 import WinDollor from "../../assets/images/golden-bnb.png";
 const NoMarbleModal = ({ activeGame, setActiveGame, gameHandler }) => {
   return (
@@ -8,7 +9,9 @@ const NoMarbleModal = ({ activeGame, setActiveGame, gameHandler }) => {
         <div className="close-modal" onClick={gameHandler}>
           <i className="fas fa-times"></i>
         </div>
-        <div>
+        <img src={Gif} className="gif w-3/4" alt="" />
+        <img src={GifOverlay} className="gif-overlay" alt="" />
+        <div className="no-marble-modal-btm">
           <h2 className="font-bold mb-6">Result:</h2>
           <h2 className="font-bold mb-6">No marbles</h2>
           <div className="flex items-center justify-center md:mt-4 score">

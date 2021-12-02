@@ -36,7 +36,7 @@
   background-image: url(../../assets/images/no-marble-modal-bg.png);
 }
 .no-marble-modal .modal-content {
-  background-image: url(../../assets/images/no-marble-modal.png);
+  background-image: none;
 }
 .lost-modal .modal-content {
   background-image: none;
@@ -168,12 +168,14 @@
 }
 
 .win-modal .modal-content,
-.lost-modal .modal-content {
+.lost-modal .modal-content,
+.no-marble-modal .modal-content {
   position: relative;
   overflow: hidden;
 }
 .win-modal .modal-content .gif,
-.lost-modal .modal-content .gif {
+.lost-modal .modal-content .gif,
+.no-marble-modal .modal-content .gif {
   position: absolute;
   top: -15px;
   left: 50%;
@@ -181,7 +183,8 @@
 }
 
 .win-modal .modal-content .gif-overlay,
-.lost-modal .modal-content .gif-overlay {
+.lost-modal .modal-content .gif-overlay,
+.no-marble-modal .modal-content .gif-overlay {
   position: absolute;
   top: 0;
   left: 0;
@@ -190,9 +193,13 @@
 }
 
 .win-modal-btm,
-.lost-modal-btm {
+.lost-modal-btm,
+.no-marble-modal-btm {
   position: absolute;
   bottom: 15%;
   left: 0;
   width: 100%;
+}
+.close-modal {
+  z-index: 999;
 }
