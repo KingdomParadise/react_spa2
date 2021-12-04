@@ -13,9 +13,13 @@ import Star from "../../assets/images/STAR.png";
 import Marbles from "../../assets/images/MARBLES.png";
 import CountUp from "react-countup";
 import "./style.css";
+import { useWeb3React } from "@web3-react/core";
+import Web3 from "web3";
+
 const Index = () => {
   const [open, setOpen] = useState(false);
-
+  const { connector, active, account, deactivate } = useWeb3React();
+  console.log(connector, account);
   const handleChange = (event) => {
     setOpen((prev) => !prev);
   };
@@ -28,6 +32,7 @@ const Index = () => {
         setOpen(false);
       }
     };
+
     document.addEventListener("mousedown", handler);
     return () => {
       document.removeEventListener("mousedown", handler);
@@ -54,7 +59,7 @@ const Index = () => {
               <div className="mr-4">
                 <img src={Metamask} alt="" />
               </div>
-              <p className="text-sm">0x71C...8976F</p>
+              <p className="text-sm">{account ? account.slice(0, 5) : ''}...{account ? account.slice(-5) : ''}</p>
             </div>
             <div className="flex items-center ml-4">
               <div className="mr-4">
@@ -142,7 +147,7 @@ const Index = () => {
           <div className="flex items-center  w-full my-10 md:my-4">
             <div
               className=" cursor-pointer marble-popup-parent relative"
-              // onClick={marbleHandler}
+            // onClick={marbleHandler}
             >
               <div className="marbles-question">
                 <i className="fas fa-question"></i>

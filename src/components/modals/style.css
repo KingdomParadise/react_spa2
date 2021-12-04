@@ -203,3 +203,29 @@
 .close-modal {
   z-index: 999;
 }
+
+.wallet-modal {
+  background-color: #1d181a;
+  max-width: 400px;
+  width: 100%;
+  background-image: none;
+}
+
+.wallet-item {
+  background-color: #3c3535;
+  cursor: pointer;
+  outline: none;
+  border: 1px solid rgb(70, 72, 80);
+}
+
+.wallet-item:hover {
+  border: rgb(185, 69, 69) solid 1px;
+}
+
+.wallet-modal h5 {
+  font-size: 25px;
+}
+
+.wallet-modal .close-icon {
+  cursor: pointer;
+}

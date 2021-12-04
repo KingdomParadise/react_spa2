@@ -35,6 +35,19 @@
   animation: progress 4s linear infinite;
 }
 
+.wallet-connect-button {
+  color: rgb(213, 0, 102);
+  font-weight: 500;
+  background-color: rgb(253, 234, 241);
+  width: 50%;
+  outline: none;
+  cursor: pointer;
+}
+
+.wallet-connect-button:hover {
+  background-color: rgb(243, 204, 219);
+}
+
 @keyframes progress {
   0% {
     width: 0%;
