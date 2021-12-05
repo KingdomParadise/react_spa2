@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, Suspense } from "react";
 import "./App.css";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Preloader from "./components/preloader";
 import Aos from "aos";
 import "aos/dist/aos.css";
+<<<<<<< Updated upstream
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "./hooks/wallet/Connectors";
 import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react-dom/cjs/react-dom.development";
@@ -42,6 +43,27 @@ function App() {
   }, [tried, active]);
   
   return <div className="App">{!active ? <Preloader loading={loading} /> : <Home />}</div>;
+=======
+const Home = React.lazy(async () => {
+  const [moduleExports] = await Promise.all([
+    import("./pages/Home"),
+    new Promise((resolve) => setTimeout(resolve, 3000)),
+  ]);
+  return moduleExports;
+});
+function App() {
+  useEffect(() => {
+    Aos.init({ duration: 1000 });
+  }, []);
+
+  return (
+    <div>
+      <Suspense fallback={<Preloader />}>
+        <Home />
+      </Suspense>
+    </div>
+  );
+>>>>>>> Stashed changes
 }
 
 export default App;
