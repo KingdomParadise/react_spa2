@@ -120,34 +120,30 @@ const HeroSection = () => {
     setActiveGame(prev => true);
 
     await contract.events.BetResolved({}).on('data', (data) => {
-          console.log('data response', data);
-          let p = data.returnValues;
-          setActiveGame(prev => false);
-          if(betInput.betId == p.betId){
-              if(p.result == betInput.bet){
-                setWinGame((prev) => !prev)
-              } else if(p.result == 0) {
-                setNoMarbleGame((prev) => !prev);
-              } else {
-                setLossGame((prev) => !prev)
-              }
-          }
+        console.log('data response', data);
+        let p = data.returnValues;
+        setActiveGame(prev => false);
+        if(betInput.betId == p.betId){
+            if(p.result == betInput.bet){
+              setWinGame((prev) => !prev)
+            } else if(p.result == 0) {
+              setNoMarbleGame((prev) => !prev);
+            } else {
+              setLossGame((prev) => !prev)
+            }
+        }
     })
+
     await contract.methods.placeBet(value).send({from: account, value: bnbValue, gasPrice: 7000000000})
     .on('error', (error) => {setActiveGame(prev => false)})
-    .then(async (receipt) => {
-
-        console.log('receipt response', receipt);
-
+    .then((receipt) => {
         let r = receipt.events.BetPlaced.returnValues;
         let betId = r.betId;
         let account = r.player;
         let bet = r.bet;
-
         betInput.betId = betId;
         betInput.account = account;
         betInput.bet = bet;
-        console.log('resultll', betInput)
     }) 
 
 
