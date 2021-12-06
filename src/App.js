@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import "./App.css";
-import Home from "./pages/Home";
+// import Home from "./pages/Home";
 import Preloader from "./components/preloader";
 import Aos from "aos";
 import "aos/dist/aos.css";
@@ -32,19 +32,20 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
+const Home = React.lazy(async () => {
+  const [moduleExports] = await Promise.all([
+    import("./pages/Home"),
+    new Promise((resolve) => setTimeout(resolve, 3000)),
+  ]);
+  return moduleExports;
+});
 function App() {
   const [loading, setLoading] = useState(false);
   const [tried, setTried] = useState(false);
   const { active, accout, activate } = useWeb3React();
   useEffect(() => {
-    // setLoading((prev) => !prev);
-    // setTimeout(() => {
-    //   setLoading((prev) => !prev);
-    // }, 4000);
-    // activate()
-    Aos.init({ duration: 500 });
+    Aos.init({ duration: 1000 });
   }, []);
-
   useEffect(() => {
     setLoading(true);
     injected.isAuthorized().then((isAuthorized) => {
@@ -67,7 +68,11 @@ function App() {
   
   return (
     <ApolloProvider client={client}>
-      <div className="App">{!active ? <Preloader loading={loading} /> : <Home />}</div>
+      <div>
+        <Suspense fallback={<Preloader />}>
+          <Home />
+        </Suspense>
+      </div>
     </ApolloProvider>
   )
 }

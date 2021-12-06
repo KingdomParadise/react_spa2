@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Header } from "../../components";
 import Marbles from "../../assets/images/MARBLES.png";
 import { TinyDollor, TinyBnb, TinyStar, Thunder } from "../../assets/svg";
@@ -21,6 +21,11 @@ import OddBg from "../../assets/images/ODD_BG.png";
 import OddBgHover from "../../assets/images/ODD_BG-HOVER.png";
 import "./style.css";
 import CountUp from "react-countup";
+import QuickPlayActive from "../../assets/audios/activate-quick-play.mp3";
+import QuickPlayDeactivate from "../../assets/audios/deactivate-quick-play.mp3";
+import SelectBnb1 from "../../assets/audios/select-bet-1.mp3";
+import SelectBnb2 from "../../assets/audios/select-bet-2.mp3";
+import SelectBnb3 from "../../assets/audios/select-bet-3.mp3";
 const data = [
   {
     bnb: "1 BNB",
@@ -40,13 +45,20 @@ const data = [
 ];
 
 const HeroSection = () => {
-  const [currentActive, setCurrentActive] = useState(0);
+  const [currentActive, setCurrentActive] = useState(-1);
   const [activeGame, setActiveGame] = useState(false);
   const [winGame, setWinGame] = useState(false);
   const [lossGame, setLossGame] = useState(false);
   const [noMarbleGame, setNoMarbleGame] = useState(false);
   const [marbleGame, setMarbleGame] = useState(false);
   const [active, setActive] = useState(false);
+
+  const quickActive = useRef(null);
+  const quickDeactive = useRef(null);
+  const bet1 = useRef(null);
+  const bet2 = useRef(null);
+  const bet3 = useRef(null);
+
   const gameHandler = () => {
     setActiveGame((prev) => !prev);
   };
@@ -64,6 +76,13 @@ const HeroSection = () => {
   };
 
   const activeHandler = (i) => {
+    if (i === 0) {
+      bet1.current.play();
+    } else if (i === 1) {
+      bet2.current.play();
+    } else {
+      bet3.current.play();
+    }
     setCurrentActive(i);
   };
 
@@ -81,7 +100,14 @@ const HeroSection = () => {
       setNoMarbleGame((prev) => !prev);
     }, 3000);
   };
-
+  const quickPlayHandler = () => {
+    if (!active) {
+      quickActive.current.play();
+    } else {
+      quickDeactive.current.play();
+    }
+    setActive((prev) => !prev);
+  };
   return (
     <>
       <section className="bg-dark-500  min-h-screen pb-14 hero-section relative">
@@ -190,7 +216,7 @@ const HeroSection = () => {
               ))}
             </div>
             <div
-              onClick={() => setActive((prev) => !prev)}
+              onClick={quickPlayHandler}
               className={`border ${
                 active ? " border-yellow" : " border-white "
               } flex items-center p-4 lg:py-7 lg:px-6 rounded-xl cursor-pointer justify-center transition-all`}
@@ -202,6 +228,11 @@ const HeroSection = () => {
             </div>
           </div>
         </div>
+        <audio ref={quickActive} src={QuickPlayActive}></audio>
+        <audio ref={quickDeactive} src={QuickPlayDeactivate}></audio>
+        <audio ref={bet1} src={SelectBnb1}></audio>
+        <audio ref={bet2} src={SelectBnb2}></audio>
+        <audio ref={bet3} src={SelectBnb3}></audio>
       </section>
       <GameStartModal
         activeGame={activeGame}

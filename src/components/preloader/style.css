@@ -32,8 +32,9 @@
 }
 
 .progress-content {
-  width: 0%;
-  animation: progress 4s linear infinite;
+  width: 98%;
+  visibility: hidden;
+  animation: progress 4s linear;
 }
 
 .wallet-connect-button {
@@ -55,7 +56,8 @@
   }
 
   100% {
-    width: 100%;
+    width: 98%;
+    visibility: visible;
   }
 }
 

@@ -9,7 +9,6 @@ import SelectWalletModal from "../modals/SelectWalletModal";
 import { injected, walletConnect } from "../../hooks/wallet/Connectors";
 import { useWeb3React } from "@web3-react/core";
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
-import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Index = ({ loading }) => {
   const [show, setShow] = useState(false);
@@ -45,10 +44,6 @@ const Index = ({ loading }) => {
   }
   return (
     <>
-
-
-
-
       <div className="" >
         <div className="row flex_direct">
           <div className="col-md-5 wallet_left">
