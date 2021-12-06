@@ -12,7 +12,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 const Index = ({ loading, laterFn }) => {
   const [show, setShow] = useState(false);
-  const { activate, chainId } = useWeb3React();
+  const { activate, chainId , account} = useWeb3React();
 
   const metaMaskConnect = async () => {
     try {
@@ -69,7 +69,7 @@ const Index = ({ loading, laterFn }) => {
               <div className="col-md-2"></div>
               <div className="col-md-8">
                 {/* connect wallet */}
-                {chainId === 56 && <div className="wallet_content">
+                {!account && <div className="wallet_content">
                   <div className="wallet_list font12 mb-4">
                     <div className="rank_tag">
                       <div className="ranklist">
@@ -101,7 +101,7 @@ const Index = ({ loading, laterFn }) => {
                 </div>}
 
                 {/* error Network */}
-                {chainId !== 56 && 
+                {account && chainId !== 56 && 
                   <div className="wallet_content error_network">
                     <div className="mb-3">
                       <h2 className="fw-bold text-danger mb-4">Incorrect Network</h2>
