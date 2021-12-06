@@ -5,7 +5,6 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "./hooks/wallet/Connectors";
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react-dom/cjs/react-dom.development";
 import {
   ApolloClient,
   InMemoryCache,
@@ -41,7 +40,7 @@ const Home = React.lazy(async () => {
 function App() {
   const [loading, setLoading] = useState(false);
   const [tried, setTried] = useState(false);
-  const { active, accout, activate } = useWeb3React();
+  const { active, activate } = useWeb3React();
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);

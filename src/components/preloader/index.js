@@ -10,9 +10,9 @@ import { injected, walletConnect } from "../../hooks/wallet/Connectors";
 import { useWeb3React } from "@web3-react/core";
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
-const Index = ({ loading }) => {
+const Index = ({ loading, laterFn }) => {
   const [show, setShow] = useState(false);
-  const { active, account, activate, library } = useWeb3React();
+  const { activate, chainId } = useWeb3React();
 
   const metaMaskConnect = async () => {
     try {
@@ -42,6 +42,12 @@ const Index = ({ loading }) => {
       console.error(e);
     }
   }
+
+  const connectLater = () => {
+    sessionStorage.setItem('connect_later', true);
+    laterFn();
+  }
+
   return (
     <>
       <div className="" >
@@ -63,7 +69,7 @@ const Index = ({ loading }) => {
               <div className="col-md-2"></div>
               <div className="col-md-8">
                 {/* connect wallet */}
-                <div className="wallet_content">
+                {chainId === 56 && <div className="wallet_content">
                   <div className="wallet_list font12 mb-3">
                     <div className="rank_tag">
                       <div className="ranklist">
@@ -73,7 +79,7 @@ const Index = ({ loading }) => {
                     <div className="d-flex justify-content-between">
                       <div className="d-flex ">
                         <div className="pe-2">
-                          <img src={Wicon} className="w-icon" />
+                          <img src={Wicon} className="w-icon" alt=''/>
                         </div>
                         <div>
                           0x864...F7B6
@@ -92,20 +98,20 @@ const Index = ({ loading }) => {
                   <div className=" mb-4">
                     <button className="wallet_connect_btn" onClick={() => setShow(true)}><i className="fas fa-dice-d20"></i> Connect Wallet</button>
                   </div>
-                </div>
+                </div>}
 
                 {/* error Network */}
-                <div className="wallet_content error_network d-none">
-
-                  <div className="mb-3">
-                    <h2 className="fw-bold text-danger">Incorrect Network</h2>
-                    <div>To play Squid Moon games your wallet needs to be on Binance Smart Chain network</div>
+                {chainId !== 56 && 
+                  <div className="wallet_content error_network">
+                    <div className="mb-3">
+                      <h2 className="fw-bold text-danger">Incorrect Network</h2>
+                      <div>To play Squid Moon games your wallet needs to be on Binance Smart Chain network</div>
+                    </div>
+                    <div className=" mb-4">
+                      <button className="wallet_connect_btn"><i className="fas fa-dice-d20"></i> Switch Network</button>
+                    </div>
                   </div>
-                  <div className=" mb-4">
-                    <button className="wallet_connect_btn" onClick={() => setShow(true)}><i className="fas fa-dice-d20"></i> Switch Network</button>
-                  </div>
-                </div>
-
+                }
               </div>
             </div>
 
@@ -114,7 +120,7 @@ const Index = ({ loading }) => {
               <div>
                 <img src={Coinl} alt="" className="coinl" />
               </div>
-              <div className="align-self-center con_later">Connect later</div>
+              <div className="align-self-center con_later" onClick={connectLater}>Connect later</div>
               <div>
                 <img src={Coinr} alt="" className="coinr" />
               </div>

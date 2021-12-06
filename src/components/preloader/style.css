@@ -186,6 +186,7 @@
 .con_later{
   font-weight: bold;
   color: #888;
+  cursor: pointer;
 }
 
 @media (max-width: 767px) {

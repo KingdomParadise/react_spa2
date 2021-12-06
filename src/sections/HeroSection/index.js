@@ -53,7 +53,7 @@ const data = [
 ];
 
 const HeroSection = () => {
-  const { account, library } = useWeb3React();
+  const { account, library, chainId } = useWeb3React();
 
   const [currentActive, setCurrentActive] = useState(-1);
   const [activeGame, setActiveGame] = useState(false);
@@ -109,8 +109,11 @@ const HeroSection = () => {
     
   }
 
-  useEffect(async () => {
-    await listenEvent();
+  useEffect(() => {
+    async function fetchData() {
+      await listenEvent();
+    }
+    fetchData();
   }, [betInput])
 
   const oddEvenHandler = async (value) => {
@@ -123,10 +126,10 @@ const HeroSection = () => {
         console.log('data response', data);
         let p = data.returnValues;
         setActiveGame(prev => false);
-        if(betInput.betId == p.betId){
-            if(p.result == betInput.bet){
+        if(betInput.betId === p.betId){
+            if(p.result === betInput.bet){
               setWinGame((prev) => !prev)
-            } else if(p.result == 0) {
+            } else if(p.result === 0) {
               setNoMarbleGame((prev) => !prev);
             } else {
               setLossGame((prev) => !prev)
@@ -199,15 +202,19 @@ const HeroSection = () => {
           <div>
             <h1 className="font-mineCraft text-4xl mx-auto text-center hidden lg:block text-yellow my-8">
               <span className="minecraft-dollor">S</span>{" "}
-              <CountUp end={200000} duration={2} /> USD IN PRIZES
+              <CountUp end={200000} duration={2} separator=','/> USD IN PRIZES
             </h1>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative">
             <div
-              className="even"
+              className={(chainId === 56 && account) ? 'even' : 'even disabled'}
               role="button"
-              onClick={() => oddEvenHandler(2)}
+              onClick={() => {
+                if (chainId === 56 && account) {
+                  oddEvenHandler(2)}
+                }
+              }
               data-aos="fade-up"
             >
               <img src={EvenBg} alt="" className="w-full even-bg" />
@@ -216,9 +223,13 @@ const HeroSection = () => {
               <p>Even</p>
             </div>
             <div
-              className="odd"
+              className={(chainId === 56 && account) ? 'odd' : 'odd disabled'}
               role="button"
-              onClick={() => oddEvenHandler(3)}
+              onClick={() => {
+                if (chainId === 56 && account) {
+                  oddEvenHandler(3)}
+                }
+              }
               data-aos="fade-up"
               data-aos-delay="400"
             >

@@ -14,15 +14,47 @@ import Marbles from "../../assets/images/MARBLES.png";
 import CountUp from "react-countup";
 import "./style.css";
 import { useWeb3React } from "@web3-react/core";
-import Web3 from "web3";
+import SelectWalletModal from "../modals/SelectWalletModal";
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
+import { injected, walletConnect } from "../../hooks/wallet/Connectors";
 
 const Index = () => {
   const [open, setOpen] = useState(false);
-  const { connector, active, account, deactivate } = useWeb3React();
+  const [show, setShow] = useState(false);
+  const { connector, account, chainId, activate } = useWeb3React();
   console.log(connector, account);
   const handleChange = (event) => {
     setOpen((prev) => !prev);
   };
+
+  const metaMaskConnect = async () => {
+    try {
+      await activate(injected);
+    }
+    catch (e) {
+      console.error(e);
+
+    }
+  };
+
+  const resetWalletConnector = (connector) => {
+    if (
+      connector &&
+      connector instanceof WalletConnectConnector
+    ) {
+      connector.walletConnectProvider = undefined
+    }
+  }
+
+  const walletConnector = async () => {
+    try {
+      await activate(walletConnect);
+      resetWalletConnector(walletConnect);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
 
   let menuRef = useRef(null);
 
@@ -48,42 +80,49 @@ const Index = () => {
               <img src={MobileLogo} alt="" />
             </picture>
           </div>
-          <div className="metamask-mobile flex lg:hidden items-center">
-            <div className="mr-4">
-              <img src={Metamask} alt="" />
-            </div>
-            <p className="text-sm">0x71C...8976F</p>
-          </div>
-          <div className="bg-dark-400 p-2 pr-8 rounded-full hidden items-center  lg:flex">
-            <div className="metamask flex items-center">
+          {account && chainId === 56 &&
+            <>
+            <div className="metamask-mobile flex lg:hidden items-center">
               <div className="mr-4">
                 <img src={Metamask} alt="" />
               </div>
-              <p className="text-sm">{account ? account.slice(0, 5) : ''}...{account ? account.slice(-5) : ''}</p>
+              <p className="text-sm">0x71C...8976F</p>
             </div>
-            <div className="flex items-center ml-4">
-              <div className="mr-4">
-                <img src={Bnb} alt="" />
+            <div className="bg-dark-400 p-2 pr-8 rounded-full hidden items-center  lg:flex">
+              <div className="metamask flex items-center">
+                <div className="mr-4">
+                  <img src={Metamask} alt="" />
+                </div>
+                <p className="text-sm">{account ? account.slice(0, 5) : ''}...{account ? account.slice(-5) : ''}</p>
               </div>
-              <p className="text-base  font-medium">1.2921 BNB</p>
-            </div>
-            <div className="flex items-center ml-4">
-              <div className="mr-4">
-                <img src={Custom_dollor} alt="" />
+              <div className="flex items-center ml-4">
+                <div className="mr-4">
+                  <img src={Bnb} alt="" />
+                </div>
+                <p className="text-base  font-medium">1.2921 BNB</p>
               </div>
-              <p className="text-base font-medium">7,721 SQM</p>
-              <p className="text-sm  text-gray-500 ml-2 font-normal">$51,263</p>
-            </div>
-            <div className="flex items-center ml-4">
-              <div className="mr-4">
-                <img src={Star} alt="" />
+              <div className="flex items-center ml-4">
+                <div className="mr-4">
+                  <img src={Custom_dollor} alt="" />
+                </div>
+                <p className="text-base font-medium">7,721 SQM</p>
+                <p className="text-sm  text-gray-500 ml-2 font-normal">$51,263</p>
               </div>
-              <p className="text-base font-medium">Rank 23</p>
-              <p className="text-sm  text-gray-500 ml-2 font-normal">
-                Score 2032
-              </p>
+              <div className="flex items-center ml-4">
+                <div className="mr-4">
+                  <img src={Star} alt="" />
+                </div>
+                <p className="text-base font-medium">Rank 23</p>
+                <p className="text-sm  text-gray-500 ml-2 font-normal">
+                  Score 2032
+                </p>
+              </div>
             </div>
-          </div>
+            </>
+          }
+          {(!account || chainId !== 56) && 
+            <button className="connect-wallet-btn" onClick={()=>setShow(true)}>Connect wallet</button>
+          }
           <div className="lg:hidden">
             <button onClick={handleChange}>
               <img src={Hamburger} alt="" />
@@ -171,6 +210,7 @@ const Index = () => {
         </div>
       </div>
       <div className={`overlay ${open ? "block" : "hidden"}`}></div>
+      <SelectWalletModal modalShow={show} setModalView={setShow} metamask={metaMaskConnect} walletconnect={walletConnector} />
     </header>
   );
 };
