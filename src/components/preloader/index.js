@@ -63,7 +63,7 @@ const Index = ({ loading }) => {
               <div className="col-md-2"></div>
               <div className="col-md-8">
                 {/* connect wallet */}
-                <div className="wallet_content d-none">
+                <div className="wallet_content ">
                   <div className="wallet_list font12 mb-4">
                     <div className="rank_tag">
                       <div className="ranklist">
@@ -95,7 +95,7 @@ const Index = ({ loading }) => {
                 </div>
 
                 {/* error Network */}
-                <div className="wallet_content error_network ">
+                <div className="wallet_content error_network d-none ">
 
                   <div className="mb-3">
                     <h1 className="fw-bold text-danger mb-4">Incorrect Network</h1>
