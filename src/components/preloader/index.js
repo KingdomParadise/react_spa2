@@ -81,7 +81,7 @@ const Index = ({ loading }) => {
                       </div>
                       <div className="d-flex">
                         <div className="pe-3"><i className="fas fa-star"></i> 10 000</div>
-                        <div><i class="fas fa-dollar-sign fadoller"></i> $200 000 SQM</div>
+                        <div><i className="fas fa-dollar-sign fadoller"></i> $200 000 SQM</div>
                       </div>
                     </div>
                   </div>
@@ -90,7 +90,7 @@ const Index = ({ loading }) => {
                     <h3 className="">Start by connecting you wallet </h3>
                   </div>
                   <div className=" mb-4">
-                    <button className="wallet_connect_btn" onClick={() => setShow(true)}><i class="fas fa-dice-d20"></i> Connect Wallet</button>
+                    <button className="wallet_connect_btn" onClick={() => setShow(true)}><i className="fas fa-dice-d20"></i> Connect Wallet</button>
                   </div>
                 </div>
 
@@ -102,7 +102,7 @@ const Index = ({ loading }) => {
                     <div>To play Squid Moon games your wallet needs to be on Binance Smart Chain network</div>
                   </div>
                   <div className=" mb-4">
-                    <button className="wallet_connect_btn" onClick={() => setShow(true)}><i class="fas fa-dice-d20"></i> Switch Network</button>
+                    <button className="wallet_connect_btn" onClick={() => setShow(true)}><i className="fas fa-dice-d20"></i> Switch Network</button>
                   </div>
                 </div>
 

@@ -6,3 +6,7 @@ html {
 body {
   position: relative;
 }
+.loading {
+  background-image: url('./assets/images/hero-bg.png');
+  height: 100vh;
+}

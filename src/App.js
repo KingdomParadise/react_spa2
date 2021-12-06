@@ -1,7 +1,6 @@
 import React, { useState, useEffect, Suspense } from "react";
 import "./App.css";
 // import Home from "./pages/Home";
-import Preloader from "./components/preloader";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import { useWeb3React } from "@web3-react/core";
@@ -69,7 +68,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div>
-        <Suspense fallback={<Preloader />}>
+        <Suspense fallback={<div className="loading"></div>}>
           <Home />
         </Suspense>
       </div>

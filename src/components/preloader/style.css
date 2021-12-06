@@ -100,6 +100,9 @@
   min-height: 100vh;
 }
 
+.wallet_right h1, .wallet_right h2, .wallet_right h3, .wallet_right h4, .wallet_right h5, .wallet_right h6 {
+  font-size: revert;
+}
 .ranklist {
   -webkit-clip-path: polygon(100% 0, 100% 10%, 23% 100%, 0 100%, 0 0);
   clip-path: polygon(100% 0, 100% 10%, 23% 100%, 0 100%, 0 0);
