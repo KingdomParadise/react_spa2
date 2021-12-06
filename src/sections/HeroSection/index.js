@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useState, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Header } from "../../components";
 import Marbles from "../../assets/images/MARBLES.png";
 import { TinyDollor, TinyBnb, TinyStar, Thunder } from "../../assets/svg";
@@ -26,25 +26,35 @@ import QuickPlayDeactivate from "../../assets/audios/deactivate-quick-play.mp3";
 import SelectBnb1 from "../../assets/audios/select-bet-1.mp3";
 import SelectBnb2 from "../../assets/audios/select-bet-2.mp3";
 import SelectBnb3 from "../../assets/audios/select-bet-3.mp3";
+import { useWeb3React } from "@web3-react/core";
+import Abi from "../../assets/abi/squidabi.json";
+import BetAbi from "../../assets/abi/Bet.json";
+
+
 const data = [
   {
     bnb: "1 BNB",
+    value:0.001,
     star: "+100",
     dollor: "+$600 SQM",
   },
   {
     bnb: "2 BNB",
+    value:0.002,
     star: "+200",
     dollor: "+$1200 SQM",
   },
   {
     bnb: "3 BNB",
+    value:0.003,
     star: "+300",
     dollor: "+$1800 SQM",
   },
 ];
 
 const HeroSection = () => {
+  const { account, library } = useWeb3React();
+
   const [currentActive, setCurrentActive] = useState(-1);
   const [activeGame, setActiveGame] = useState(false);
   const [winGame, setWinGame] = useState(false);
@@ -52,6 +62,13 @@ const HeroSection = () => {
   const [noMarbleGame, setNoMarbleGame] = useState(false);
   const [marbleGame, setMarbleGame] = useState(false);
   const [active, setActive] = useState(false);
+  const [bnb, setBnb] = useState(0.001);
+  // const [betInput, setBetInput] = useState([]);
+  const betInput = {betId:"", account:"", bet:""};
+  
+  // const address = "0x931CB6D74471858e3729406073738223693e506e";
+  const address = "0x23426f3be2c4Ea2deBF4222cf79FE7F94062b59B";
+  const BetAddress = "0x6b3D38628279dC0f5bdCe4a2b403e8Aef5642088";
 
   const quickActive = useRef(null);
   const quickDeactive = useRef(null);
@@ -75,7 +92,7 @@ const HeroSection = () => {
     setMarbleGame((prev) => !prev);
   };
 
-  const activeHandler = (i) => {
+  const activeHandler = (i, v) => {
     if (i === 0) {
       bet1.current.play();
     } else if (i === 1) {
@@ -83,8 +100,58 @@ const HeroSection = () => {
     } else {
       bet3.current.play();
     }
+    setBnb(v);
     setCurrentActive(i);
   };
+
+  const listenEvent = async () => {
+    let contract = await new library.eth.Contract(BetAbi.abi, BetAddress);
+    
+  }
+
+  useEffect(async () => {
+    await listenEvent();
+  }, [betInput])
+
+  const oddEvenHandler = async (value) => {
+    let contract = await new library.eth.Contract(Abi, address);
+    let bnbValue = await library.utils.toWei(bnb.toString(), "ether");
+    
+    setActiveGame(prev => true);
+
+    await contract.events.BetResolved({}).on('data', (data) => {
+          console.log('data response', data);
+          let p = data.returnValues;
+          setActiveGame(prev => false);
+          if(betInput.betId == p.betId){
+              if(p.result == betInput.bet){
+                setWinGame((prev) => !prev)
+              } else if(p.result == 0) {
+                setNoMarbleGame((prev) => !prev);
+              } else {
+                setLossGame((prev) => !prev)
+              }
+          }
+    })
+    await contract.methods.placeBet(value).send({from: account, value: bnbValue, gasPrice: 7000000000})
+    .on('error', (error) => {setActiveGame(prev => false)})
+    .then(async (receipt) => {
+
+        console.log('receipt response', receipt);
+
+        let r = receipt.events.BetPlaced.returnValues;
+        let betId = r.betId;
+        let account = r.player;
+        let bet = r.bet;
+
+        betInput.betId = betId;
+        betInput.account = account;
+        betInput.bet = bet;
+        console.log('resultll', betInput)
+    }) 
+
+
+  }
 
   const oddHandler = () => {
     setActiveGame((prev) => !prev);
@@ -94,12 +161,20 @@ const HeroSection = () => {
     }, 3000);
   };
   const evenHandler = () => {
-    setLossGame((prev) => !prev);
+    setActiveGame((prev) => !prev);
     setTimeout(() => {
+      setActiveGame((prev) => !prev);
       setLossGame((prev) => !prev);
-      setNoMarbleGame((prev) => !prev);
+      
     }, 3000);
   };
+  // const evenHandler = () => {
+  //   setLossGame((prev) => !prev);
+  //   setTimeout(() => {
+  //     setLossGame((prev) => !prev);
+  //     setNoMarbleGame((prev) => !prev);
+  //   }, 3000);
+  // };
   const quickPlayHandler = () => {
     if (!active) {
       quickActive.current.play();
@@ -128,7 +203,7 @@ const HeroSection = () => {
           <div>
             <h1 className="font-mineCraft text-4xl mx-auto text-center hidden lg:block text-yellow my-8">
               <span className="minecraft-dollor">S</span>{" "}
-              <CountUp end={200000} duration={2} separator=','/> USD IN PRIZES
+              <CountUp end={200000} duration={2} /> USD IN PRIZES
             </h1>
           </div>
 
@@ -136,7 +211,7 @@ const HeroSection = () => {
             <div
               className="even"
               role="button"
-              onClick={evenHandler}
+              onClick={() => oddEvenHandler(2)}
               data-aos="fade-up"
             >
               <img src={EvenBg} alt="" className="w-full even-bg" />
@@ -147,7 +222,7 @@ const HeroSection = () => {
             <div
               className="odd"
               role="button"
-              onClick={oddHandler}
+              onClick={() => oddEvenHandler(3)}
               data-aos="fade-up"
               data-aos-delay="400"
             >
@@ -170,7 +245,7 @@ const HeroSection = () => {
                     currentActive === i ? "active" : ""
                   }`}
                   key={i}
-                  onClick={() => activeHandler(i)}
+                  onClick={() => activeHandler(i, v.value)}
                 >
                   <div className="tick">
                     <i className="fas fa-check"></i>
@@ -216,7 +291,7 @@ const HeroSection = () => {
               ))}
             </div>
             <div
-              onClick={quickPlayHandler}
+              onClick={() => setActive((prev) => !prev)}
               className={`border ${
                 active ? " border-yellow" : " border-white "
               } flex items-center p-4 lg:py-7 lg:px-6 rounded-xl cursor-pointer justify-center transition-all`}
