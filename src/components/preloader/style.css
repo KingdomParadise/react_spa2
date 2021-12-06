@@ -31,8 +31,9 @@
   text-align: center;
 }
 .progress-content {
-  width: 0%;
-  animation: progress 4s linear infinite;
+  width: 98%;
+  visibility: hidden;
+  animation: progress 4s linear;
 }
 
 .wallet-connect-button {
@@ -53,7 +54,8 @@
     width: 0%;
   }
   100% {
-    width: 100%;
+    width: 98%;
+    visibility: visible;
   }
 }
 @media (max-width: 768px) {
