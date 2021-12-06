@@ -291,7 +291,7 @@ const HeroSection = () => {
               ))}
             </div>
             <div
-              onClick={() => setActive((prev) => !prev)}
+              onClick={quickPlayHandler}
               className={`border ${
                 active ? " border-yellow" : " border-white "
               } flex items-center p-4 lg:py-7 lg:px-6 rounded-xl cursor-pointer justify-center transition-all`}
