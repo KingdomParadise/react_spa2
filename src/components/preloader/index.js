@@ -63,8 +63,8 @@ const Index = ({ loading }) => {
               <div className="col-md-2"></div>
               <div className="col-md-8">
                 {/* connect wallet */}
-                <div className="wallet_content">
-                  <div className="wallet_list font12 mb-3">
+                <div className="wallet_content d-none">
+                  <div className="wallet_list font12 mb-4">
                     <div className="rank_tag">
                       <div className="ranklist">
                         1
@@ -86,8 +86,8 @@ const Index = ({ loading }) => {
                     </div>
                   </div>
                   <div className="mb-3">
-                    <h1>Bet BNB - Get SQM & win big prize</h1>
-                    <h3 className="">Start by connecting you wallet </h3>
+                    <h1 className="fw-bold font_big mb-4">Bet BNB - Get SQM & win big prize</h1>
+                    <h2 className="fw-bold mb-4">Start by connecting you wallet </h2>
                   </div>
                   <div className=" mb-4">
                     <button className="wallet_connect_btn" onClick={() => setShow(true)}><i className="fas fa-dice-d20"></i> Connect Wallet</button>
@@ -95,11 +95,11 @@ const Index = ({ loading }) => {
                 </div>
 
                 {/* error Network */}
-                <div className="wallet_content error_network d-none">
+                <div className="wallet_content error_network ">
 
                   <div className="mb-3">
-                    <h2 className="fw-bold text-danger">Incorrect Network</h2>
-                    <div>To play Squid Moon games your wallet needs to be on Binance Smart Chain network</div>
+                    <h1 className="fw-bold text-danger mb-4">Incorrect Network</h1>
+                    <div className="mb-4">To play Squid Moon games your wallet needs to be on Binance Smart Chain network</div>
                   </div>
                   <div className=" mb-4">
                     <button className="wallet_connect_btn" onClick={() => setShow(true)}><i className="fas fa-dice-d20"></i> Switch Network</button>
@@ -114,7 +114,7 @@ const Index = ({ loading }) => {
               <div>
                 <img src={Coinl} alt="" className="coinl" />
               </div>
-              <div className="align-self-center con_later">Connect later</div>
+              <div className="align-self-center con_later mb-4">Connect later</div>
               <div>
                 <img src={Coinr} alt="" className="coinr" />
               </div>
