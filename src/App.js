@@ -7,6 +7,30 @@ import "aos/dist/aos.css";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "./hooks/wallet/Connectors";
 import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react-dom/cjs/react-dom.development";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
+
+const httpLink = createHttpLink({
+  uri: 'https://api.polarsync.app/subgraphs/id/QmammBhGH4bB5VhRhe46BWamNgj5ygXPDQ2V76d9mtbKk6',
+});
+
+const authLink = setContext((_, { headers }) => {
+  return {
+    headers: {
+      ...headers
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -41,7 +65,11 @@ function App() {
     }
   }, [tried, active]);
   
-  return <div className="App">{!active ? <Preloader loading={loading} /> : <Home />}</div>;
+  return (
+    <ApolloProvider client={client}>
+      <div className="App">{!active ? <Preloader loading={loading} /> : <Home />}</div>
+    </ApolloProvider>
+  )
 }
 
 export default App;

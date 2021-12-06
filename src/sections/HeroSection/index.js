@@ -102,7 +102,7 @@ const HeroSection = () => {
           <div>
             <h1 className="font-mineCraft text-4xl mx-auto text-center hidden lg:block text-yellow my-8">
               <span className="minecraft-dollor">S</span>{" "}
-              <CountUp end={200000} duration={2} /> USD IN PRIZES
+              <CountUp end={200000} duration={2} separator=','/> USD IN PRIZES
             </h1>
           </div>
 

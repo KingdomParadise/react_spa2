@@ -100,7 +100,7 @@ const Index = () => {
         <div className="  w-full  mx-auto  block lg:hidden">
           <h1 className="font-mineCraft text-3xl md:text-4xl mx-auto text-center text-yellow my-8">
             <span className="minecraft-dollor">S</span>{" "}
-            <CountUp end={200000} duration={2} /> USD IN PRIZES
+            <CountUp end={200000} duration={2} separator=',' /> USD IN PRIZES
           </h1>
         </div>
       </div>
@@ -158,7 +158,7 @@ const Index = () => {
           </div>
           <h1 className="font-mineCraft text-3xl md:text-4xl mx-auto  text-yellow my-8">
             <span className="minecraft-dollor">S</span>{" "}
-            <CountUp end={200000} duration={2} /> USD IN PRIZES
+            <CountUp end={200000} duration={2} separator=','/> USD IN PRIZES
           </h1>
           <div className="flex items-center menu-social">
             <a href="#">
