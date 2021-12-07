@@ -34,19 +34,19 @@ import BetAbi from "../../assets/abi/Bet.json";
 const data = [
   {
     bnb: "1 BNB",
-    value:0.001,
+    value:0.05,
     star: "+100",
     dollor: "+$600 SQM",
   },
   {
     bnb: "2 BNB",
-    value:0.002,
+    value:0.06,
     star: "+200",
     dollor: "+$1200 SQM",
   },
   {
     bnb: "3 BNB",
-    value:0.003,
+    value:0.07,
     star: "+300",
     dollor: "+$1800 SQM",
   },

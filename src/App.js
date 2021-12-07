@@ -41,7 +41,7 @@ const Home = React.lazy(async () => {
 function App() {
   const [loading, setLoading] = useState(false);
   const [tried, setTried] = useState(false);
-  const { active, accout, activate } = useWeb3React();
+  const { active, accout, activate, chainId } = useWeb3React();
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
