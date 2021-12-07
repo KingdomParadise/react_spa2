@@ -62,7 +62,7 @@ const HeroSection = () => {
   const [noMarbleGame, setNoMarbleGame] = useState(false);
   const [marbleGame, setMarbleGame] = useState(false);
   const [active, setActive] = useState(false);
-  const [bnb, setBnb] = useState(0.001);
+  const [bnb, setBnb] = useState(0.05);
   // const [betInput, setBetInput] = useState([]);
   const betInput = {betId:"", account:"", bet:""};
   
@@ -100,6 +100,7 @@ const HeroSection = () => {
     } else {
       bet3.current.play();
     }
+    console.log(v)
     setBnb(v);
     setCurrentActive(i);
   };
