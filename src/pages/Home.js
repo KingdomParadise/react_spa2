@@ -21,8 +21,12 @@ const Home = () => {
   }, [loading, bet]);
 
   useEffect(()=> {
-    setLater(sessionStorage.getItem('connect_later'))
+    setLater(sessionStorage.getItem('connect_later'));
   }, [])
+
+  const checkAuth = () => {
+    setLater(sessionStorage.getItem('connect_later'));
+  }
 
   if (!later && (!account || chainId !== 56)) {
     return <Auth laterFn={()=>setLater(true)}/>
@@ -34,7 +38,7 @@ const Home = () => {
         className="bg-dark-700"
       >
         <Layout>
-          <HeroSection />
+          <HeroSection checkAuth={checkAuth}/>
           <div className="py-20 bg-dark-700 bottom-section">
             {account && chainId === 56 &&<PrevGameSection />}
             <LeaderBoard />
