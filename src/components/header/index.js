@@ -22,16 +22,14 @@ const Index = ({checkAuth}) => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [eqxBalance, setEqxBalance] = useState(0);
-  const { connector, account, chainId, activate } = useWeb3React();
+  const { connector, account, chainId, activate, library} = useWeb3React();
 
   const getBalance = async () => {
     try {
       if (account) {
-          let web3 = new Web3(Web3.givenProvider);
-          web3.eth.getBalance(account).then((balanceInWei) => {
-            setEqxBalance(web3.utils.fromWei(balanceInWei));
-        });
-          
+          let balance = await library.eth.getBalance(account);
+          setEqxBalance(await library.utils.fromWei(balance, "ether"));
+          console.log('balance', balance)
       }
 
     } catch (error) {
@@ -85,7 +83,7 @@ const Index = ({checkAuth}) => {
     return () => {
       document.removeEventListener("mousedown", handler);
     };
-  }, []);
+  }, [chainId, account]);
   return (
     <header className=" text-white bg-dark-700 lg:bg-transparent pb-10 lg:pb-0">
       <div className="container">
@@ -115,7 +113,7 @@ const Index = ({checkAuth}) => {
                 <div className="mr-4">
                   <img src={Bnb} alt="" />
                 </div>
-                <p className="text-base  font-medium">{eqxBalance.toFixed(4)} BNB</p>
+                <p className="text-base  font-medium">{(parseFloat(eqxBalance)).toFixed(4)} BNB</p>
               </div>
               <div className="flex items-center ml-4">
                 <div className="mr-4">
