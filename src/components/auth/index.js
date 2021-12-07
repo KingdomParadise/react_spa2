@@ -12,7 +12,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
 
 const Index = ({ loading, laterFn }) => {
   const [show, setShow] = useState(false);
-  const { activate, chainId , account} = useWeb3React();
+  const { activate, chainId , account, library} = useWeb3React();
 
   const metaMaskConnect = async () => {
     try {
@@ -23,6 +23,13 @@ const Index = ({ loading, laterFn }) => {
 
     }
   };
+
+  const switchNetwork = async () => {
+    await library.eth.currentProvider.request({
+      method: "wallet_switchEthereumChain",
+      params: [{ chainId: "0x38" }]
+    })
+  }
 
   const resetWalletConnector = (connector) => {
     if (
@@ -108,7 +115,7 @@ const Index = ({ loading, laterFn }) => {
                       <div className="mb-4">To play Squid Moon games your wallet needs to be on Binance Smart Chain network</div>
                     </div>
                     <div className=" mb-4">
-                      <button className="wallet_connect_btn"><i className="fas fa-dice-d20"></i> Switch Network</button>
+                      <button className="wallet_connect_btn" onClick={switchNetwork}><i className="fas fa-dice-d20"></i> Switch Network</button>
                     </div>
                   </div>
                 }
