@@ -52,7 +52,7 @@ const data = [
   },
 ];
 
-const HeroSection = () => {
+const HeroSection = ({checkAuth}) => {
   const { account, library, chainId } = useWeb3React();
 
   const [currentActive, setCurrentActive] = useState(-1);
@@ -187,7 +187,7 @@ const HeroSection = () => {
   return (
     <>
       <section className="bg-dark-500  min-h-screen pb-14 hero-section relative">
-        <Header />
+        <Header checkAuth={checkAuth}/>
         <div className="container">
           <div className="mx-auto hidden lg:flex items-center justify-center w-full my-10 md:my-4">
             <div

@@ -18,7 +18,7 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { injected, walletConnect } from "../../hooks/wallet/Connectors";
 import Web3 from "web3";
 
-const Index = () => {
+const Index = ({checkAuth}) => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [eqxBalance, setEqxBalance] = useState(0);
@@ -115,7 +115,7 @@ const Index = () => {
                 <div className="mr-4">
                   <img src={Bnb} alt="" />
                 </div>
-                <p className="text-base  font-medium">{eqxBalance} BNB</p>
+                <p className="text-base  font-medium">{eqxBalance.toFixed(4)} BNB</p>
               </div>
               <div className="flex items-center ml-4">
                 <div className="mr-4">
@@ -137,7 +137,15 @@ const Index = () => {
             </>
           }
           {(!account || chainId !== 56) && 
-            <button className="connect-wallet-btn" onClick={()=>setShow(true)}>Connect wallet</button>
+            <button className="connect-wallet-btn" onClick={()=>{
+              if (account) {
+                sessionStorage.removeItem('connect_later');
+                checkAuth();
+              } else {
+                setShow(true);
+              }
+              
+            }}>Connect wallet</button>
           }
           <div className="lg:hidden">
             <button onClick={handleChange}>
