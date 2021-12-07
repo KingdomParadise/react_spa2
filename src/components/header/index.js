@@ -16,26 +16,46 @@ import { useWeb3React } from "@web3-react/core";
 import SelectWalletModal from "../modals/SelectWalletModal";
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { injected, walletConnect } from "../../hooks/wallet/Connectors";
-import Web3 from "web3";
+import IercAbi from "../../assets/abi/erc20.json";
+import PancakeAbi from "../../assets/abi/pancakeAbi.json";
 
 const Index = ({checkAuth}) => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [eqxBalance, setEqxBalance] = useState(0);
   const { connector, account, chainId, activate, library} = useWeb3React();
+  const [sqmBalance, setSqmBalance] = useState(0.00);
+  const [sqmRate, setSqmRate] = useState(0);
+  const sqmAddr = "0x2766cc2537538ac68816b6b5a393fa978a4a8931";
+  const pancakeAddr = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
+  const bnbAddr = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
+  const usdtAddr = "0x55d398326f99059fF775485246999027B3197955";
 
   const getBalance = async () => {
     try {
       if (account) {
+          let sqmContract = await new library.eth.Contract(IercAbi, sqmAddr);
+          let sqmBln = await sqmContract.methods.balanceOf(account).call();
+          setSqmBalance(sqmBln);
           let balance = await library.eth.getBalance(account);
           setEqxBalance(await library.utils.fromWei(balance, "ether"));
-          console.log('balance', balance)
       }
 
     } catch (error) {
       console.log("error", error)
     }
   };
+
+  const setSqmRatePancake = async () => {
+      let sqmContract = await new library.eth.Contract(IercAbi, sqmAddr);
+      let sqmDecimal = await sqmContract.methods.decimals().call();
+      let router = await new library.eth.Contract(PancakeAbi, pancakeAddr);
+      let tokenToSell = 1 * 10**sqmDecimal;
+      let amountOutSqmToUsdt = await router.methods.getAmountsOut(tokenToSell.toString(), [sqmAddr, usdtAddr]).call();
+      amountOutSqmToUsdt = await library.utils.fromWei(amountOutSqmToUsdt[1].toString());
+      setSqmRate(amountOutSqmToUsdt);
+  }
+
   console.log(connector, account);
   const handleChange = (event) => {
     setOpen((prev) => !prev);
@@ -72,13 +92,14 @@ const Index = ({checkAuth}) => {
 
   let menuRef = useRef(null);
 
-  useEffect(() => {
+  useEffect( async () => {
     const handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
-    getBalance();
+    await setSqmRatePancake();
+    await getBalance();
     document.addEventListener("mousedown", handler);
     return () => {
       document.removeEventListener("mousedown", handler);
@@ -119,8 +140,8 @@ const Index = ({checkAuth}) => {
                 <div className="mr-4">
                   <img src={Custom_dollor} alt="" />
                 </div>
-                <p className="text-base font-medium">7,721 SQM</p>
-                <p className="text-sm  text-gray-500 ml-2 font-normal">$51,263</p>
+                <p className="text-base font-medium">{(parseFloat(sqmBalance)).toFixed(2)} SQM</p>
+                <p className="text-sm  text-gray-500 ml-2 font-normal">${((parseFloat(sqmBalance * sqmRate))).toLocaleString('en-US', {minimumFractionDigits: 2})}</p>
               </div>
               <div className="flex items-center ml-4">
                 <div className="mr-4">
