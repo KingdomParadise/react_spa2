@@ -3,7 +3,7 @@ import { Layout } from "../components";
 import HeroSection from "../sections/HeroSection";
 import PrevGameSection from "../sections/PrevGameSection";
 import LeaderBoard from "../sections/LeaderBoard";
-import Preloader from "./../components/preloader";
+import Auth from "./../components/auth";
 import "./style.css";
 import { useQuery } from '@apollo/client';
 import { QUERY_BET } from "../utils/queries";
@@ -25,7 +25,7 @@ const Home = () => {
   }, [])
 
   if (!later && (!account || chainId !== 56)) {
-    return <Preloader laterFn={()=>setLater(true)}/>
+    return <Auth laterFn={()=>setLater(true)}/>
   } else {
     return (
       <div

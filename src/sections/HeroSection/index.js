@@ -105,7 +105,9 @@ const HeroSection = () => {
   };
 
   const listenEvent = async () => {
-    let contract = await new library.eth.Contract(BetAbi.abi, BetAddress);
+    if (account && chainId === 56) {
+      let contract = await new library.eth.Contract(BetAbi.abi, BetAddress);
+    }
     
   }
 
@@ -217,9 +219,10 @@ const HeroSection = () => {
               }
               data-aos="fade-up"
             >
-              <img src={EvenBg} alt="" className="w-full even-bg" />
-              <img src={EvenBgHover} alt="" className="w-full even-hover" />
-
+              {chainId === 56 && account && <>
+                <img src={EvenBg} alt="" className="w-full even-bg" />
+                <img src={EvenBgHover} alt="" className="w-full even-hover" />
+              </>}
               <p>Even</p>
             </div>
             <div
@@ -233,9 +236,10 @@ const HeroSection = () => {
               data-aos="fade-up"
               data-aos-delay="400"
             >
-              <img src={OddBg} alt="" className="w-full odd-bg" />
-              <img src={OddBgHover} alt="" className="w-full odd-hover" />
-
+              {chainId === 56 && account && <>
+                <img src={OddBg} alt="" className="w-full odd-bg" />
+                <img src={OddBgHover} alt="" className="w-full odd-hover" />
+              </>}
               <p>Odd</p>
             </div>
             <div className="or hidden md:flex">

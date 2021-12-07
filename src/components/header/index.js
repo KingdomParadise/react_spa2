@@ -5,7 +5,6 @@ import MobileLogo from "../../assets/images/LOGO_MOBILE.png";
 import Hamburger from "../../assets/images/Hamburgur.png";
 import User from "../../assets/images/USER.png";
 import Languages from "../../assets/images/LANGUAGES.png";
-import Music from "../../assets/images/MUSIC.png";
 import Metamask from "../../assets/images/METAMASK.png";
 import Bnb from "../../assets/images/BNB.png";
 import Custom_dollor from "../../assets/images/CUSTOM_DOLLOR.png";
@@ -17,11 +16,28 @@ import { useWeb3React } from "@web3-react/core";
 import SelectWalletModal from "../modals/SelectWalletModal";
 import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { injected, walletConnect } from "../../hooks/wallet/Connectors";
+import Web3 from "web3";
 
 const Index = () => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
+  const [eqxBalance, setEqxBalance] = useState(0);
   const { connector, account, chainId, activate } = useWeb3React();
+
+  const getBalance = async () => {
+    try {
+      if (account) {
+          let web3 = new Web3(Web3.givenProvider);
+          web3.eth.getBalance(account).then((balanceInWei) => {
+            setEqxBalance(web3.utils.fromWei(balanceInWei));
+        });
+          
+      }
+
+    } catch (error) {
+      console.log("error", error)
+    }
+  };
   console.log(connector, account);
   const handleChange = (event) => {
     setOpen((prev) => !prev);
@@ -64,7 +80,7 @@ const Index = () => {
         setOpen(false);
       }
     };
-
+    getBalance();
     document.addEventListener("mousedown", handler);
     return () => {
       document.removeEventListener("mousedown", handler);
@@ -86,7 +102,7 @@ const Index = () => {
               <div className="mr-4">
                 <img src={Metamask} alt="" />
               </div>
-              <p className="text-sm">0x71C...8976F</p>
+              <p className="text-sm">{account ? account.slice(0, 5) : ''}...{account ? account.slice(-5) : ''}</p>
             </div>
             <div className="bg-dark-400 p-2 pr-8 rounded-full hidden items-center  lg:flex">
               <div className="metamask flex items-center">
@@ -99,7 +115,7 @@ const Index = () => {
                 <div className="mr-4">
                   <img src={Bnb} alt="" />
                 </div>
-                <p className="text-base  font-medium">1.2921 BNB</p>
+                <p className="text-base  font-medium">{eqxBalance} BNB</p>
               </div>
               <div className="flex items-center ml-4">
                 <div className="mr-4">
@@ -114,7 +130,7 @@ const Index = () => {
                 </div>
                 <p className="text-base font-medium">Rank 23</p>
                 <p className="text-sm  text-gray-500 ml-2 font-normal">
-                  Score 2032
+                  Est. Payout 2032
                 </p>
               </div>
             </div>
@@ -129,7 +145,13 @@ const Index = () => {
             </button>
           </div>
           <div className="hidden lg:flex flex-shrink-0 items-center ">
-            <img src={Music} alt="" className="w-8 " />
+            {/*<img src={Music} alt="" className="w-8 " />*/}
+            <ol class="equaliser">
+              <li class="equaliser-bar"></li>
+              <li class="equaliser-bar"></li>
+              <li class="equaliser-bar"></li>
+              <li class="equaliser-bar"></li>
+            </ol>
             <div className="w-8 mx-4">
               <img src={Languages} alt="languages" className="w-full " />
             </div>

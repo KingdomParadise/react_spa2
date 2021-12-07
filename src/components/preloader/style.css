@@ -26,7 +26,7 @@
 }
 
 .preloader p {
-  max-width: 400px;
+  max-width: 450px;
   margin: auto;
   text-align: center;
 }
@@ -244,4 +244,7 @@
   .flex_direct {
     flex-wrap: wrap-reverse !important;
   }
+}
+.yellow {
+  color: #FCEC60;
 }

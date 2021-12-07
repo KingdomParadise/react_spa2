@@ -12,6 +12,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import Preloader from './components/preloader';
 
 const httpLink = createHttpLink({
   uri: 'https://api.polarsync.app/subgraphs/id/QmammBhGH4bB5VhRhe46BWamNgj5ygXPDQ2V76d9mtbKk6',
@@ -67,7 +68,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div>
-        <Suspense fallback={<div className="loading"></div>}>
+        <Suspense fallback={<Preloader />}>
           <Home />
         </Suspense>
       </div>

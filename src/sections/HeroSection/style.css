@@ -69,6 +69,7 @@
 .odd.disabled {
   opacity: .4 !important;
   pointer-events: none;
+  background: #5c5938;
 }
 .even-hover,
 .odd-hover {
