@@ -26,7 +26,7 @@
 }
 
 .preloader p {
-  max-width: 400px;
+  max-width: 450px;
   margin: auto;
   text-align: center;
 }
@@ -100,9 +100,10 @@
   min-height: 100vh;
 }
 
-.wallet_right h1, .wallet_right h2, .wallet_right h3, .wallet_right h4, .wallet_right h5, .wallet_right h6 {
+.wallet_right h2, .wallet_right h3, .wallet_right h4, .wallet_right h5, .wallet_right h6 {
   font-size: revert;
 }
+
 .ranklist {
   -webkit-clip-path: polygon(100% 0, 100% 10%, 23% 100%, 0 100%, 0 0);
   clip-path: polygon(100% 0, 100% 10%, 23% 100%, 0 100%, 0 0);
@@ -131,15 +132,19 @@
   color: #000;
   font-weight: bold;
   box-shadow: 0px 15px 0px -8px #fcec6042;
+  width: 70%;
+  margin: auto;
 }
 
 .wallet_content {
   /* width: 75%; */
   margin: auto;
-  padding: 0px 15px;
+  padding: 0px 25px;
 }
-
-.wallet_content h3 {
+.error_network h1{
+  font-size: revert;
+}
+.wallet_content h2 {
   color: #fcec60;
 }
 
@@ -170,22 +175,35 @@
 
 .connect_later_sec {
   align-items: baseline;
+  position: relative;
 }
 
 .coinl {
-  height: 85px;
+  height: 115px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }
 
 .coinr {
-  height: 125px;
+  height: 135px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
 }
 
 .left_content {
   padding: 3rem;
 }
-.con_later{
+
+.con_later {
   font-weight: bold;
   color: #888;
+  cursor: pointer;
+}
+
+.font_big {
+  font-size: 50px;
 }
 
 @media (max-width: 767px) {
@@ -210,9 +228,15 @@
     padding: 15px;
     text-align: center;
   }
+
+  .font_big {
+    font-size: revert;
+  }
+
   .left_content .text-4xl {
     font-size: 1.25rem;
   }
+
   .left_content img {
     margin: auto;
   }
@@ -220,4 +244,7 @@
   .flex_direct {
     flex-wrap: wrap-reverse !important;
   }
+}
+.yellow {
+  color: #FCEC60;
 }

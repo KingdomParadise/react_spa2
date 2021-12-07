@@ -65,6 +65,12 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+.even.disabled,
+.odd.disabled {
+  opacity: .4 !important;
+  pointer-events: none;
+  background: #5c5938;
+}
 .even-hover,
 .odd-hover {
   position: absolute;

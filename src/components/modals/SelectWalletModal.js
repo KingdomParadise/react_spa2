@@ -13,11 +13,11 @@ const SelectWalletModal = ({ modalShow, setModalView, metamask, walletconnect })
         </div>
         <div className="flex justify-between mt-14 p-2.5 wallet-item rounded-md" onClick={() => metamask()}>
           <p>MetaMask</p>
-          <img src={METAMASK} />
+          <img src={METAMASK} alt=''/>
         </div>
         <div className="flex justify-between mt-6 p-2.5 wallet-item rounded-md" onClick={() => walletconnect()}>
           <p>WalletConnect</p>
-          <img src={WALLETCONNECTOR} />
+          <img src={WALLETCONNECTOR} alt=''/>
         </div>
       </div>
     </div>

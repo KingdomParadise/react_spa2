@@ -5,7 +5,6 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import { useWeb3React } from "@web3-react/core";
 import { injected } from "./hooks/wallet/Connectors";
-import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from "react-dom/cjs/react-dom.development";
 import {
   ApolloClient,
   InMemoryCache,
@@ -13,6 +12,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import Preloader from './components/preloader';
 
 const httpLink = createHttpLink({
   uri: 'https://api.polarsync.app/subgraphs/id/QmammBhGH4bB5VhRhe46BWamNgj5ygXPDQ2V76d9mtbKk6',
@@ -41,7 +41,7 @@ const Home = React.lazy(async () => {
 function App() {
   const [loading, setLoading] = useState(false);
   const [tried, setTried] = useState(false);
-  const { active, accout, activate, chainId } = useWeb3React();
+  const { active, activate } = useWeb3React();
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
@@ -68,7 +68,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <div>
-        <Suspense fallback={<div className="loading"></div>}>
+        <Suspense fallback={<Preloader />}>
           <Home />
         </Suspense>
       </div>

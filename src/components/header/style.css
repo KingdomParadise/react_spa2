@@ -55,3 +55,99 @@ body .MuiList-root.MuiList-padding.MuiMenu-list {
   top: 0;
   left: 0;
 }
+.connect-wallet-btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  width: 137px;
+  height: 40px;
+  left: 1041px;
+  top: 27px;
+
+  /* Neutrals/4 */
+
+  border: 2px solid #777E91;
+  box-sizing: border-box;
+  border-radius: 90px;
+}
+
+/* equaliser */
+.equaliser {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+  display: flex;
+}
+.equaliser-bar {
+  float:left;
+  width: 25%;
+  height: 100%;
+  position: relative;
+}
+.equaliser-bar:after {
+  position: absolute;
+  left: 0;
+  right:20%; /* space between bars */
+  bottom: 0;
+  content: "";
+  background: #b8b6ba;
+}
+.equaliser-bar:nth-child(4n+1):after {
+  animation: equaliser-wave 2s 1s ease-out alternate infinite;
+}
+
+.equaliser-bar:nth-child(4n+2):after {
+  animation: equaliser-wave 2s 0.5s ease-out alternate infinite;
+}
+
+.equaliser-bar:nth-child(4n+3):after {
+  animation: equaliser-wave 2s 1.5s ease-out alternate infinite;
+}
+
+.equaliser-bar:nth-child(4n+4):after {
+  animation: equaliser-wave 2s 0.25s ease-out alternate infinite;
+}
+      
+@keyframes equaliser-wave {
+  0% {
+    height: 10%;
+  }
+  10% {
+    height: 30%;
+  }
+  20% {
+    height: 50%;
+  }
+  30% {
+    height: 20%;
+  }
+  40% {
+    height: 70%;
+  }
+  50% {
+    height: 90%;
+  }
+  60% {
+    height: 30%;
+  }
+  70% {
+    height: 80%;
+  }
+  80% {
+    height: 50%;
+  }
+  90% {
+    height: 30%;
+  }
+  100% {
+    height: 10%;
+  }
+}
+/* end equaliser */
+.equaliser {
+  height: 30px;
+  width: 20px;
+}

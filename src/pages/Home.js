@@ -1,17 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Layout } from "../components";
 import HeroSection from "../sections/HeroSection";
 import PrevGameSection from "../sections/PrevGameSection";
 import LeaderBoard from "../sections/LeaderBoard";
-import Preloader from "./../components/preloader";
+import Auth from "./../components/auth";
 import "./style.css";
 import { useQuery } from '@apollo/client';
 import { QUERY_BET } from "../utils/queries";
 import { useWeb3React } from "@web3-react/core";
 
 const Home = () => {
-  const { account } = useWeb3React();
+  const { account, chainId } = useWeb3React();
   const { loading, data: bet, error } = useQuery(QUERY_BET, { variables: { id: '' } });
+  const [later, setLater] = useState(false);
   if (error) console.log(`Error! ${error.message}`);
   useEffect(()=>{
     if (!loading){
@@ -19,8 +20,12 @@ const Home = () => {
     }
   }, [loading, bet]);
 
-  if (!account) {
-    return <Preloader />
+  useEffect(()=> {
+    setLater(sessionStorage.getItem('connect_later'))
+  }, [])
+
+  if (!later && (!account || chainId !== 56)) {
+    return <Auth laterFn={()=>setLater(true)}/>
   } else {
     return (
       <div
@@ -31,7 +36,7 @@ const Home = () => {
         <Layout>
           <HeroSection />
           <div className="py-20 bg-dark-700 bottom-section">
-            <PrevGameSection />
+            {account && chainId === 56 &&<PrevGameSection />}
             <LeaderBoard />
           </div>
         </Layout>
