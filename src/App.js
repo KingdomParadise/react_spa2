@@ -39,14 +39,12 @@ const Home = React.lazy(async () => {
   return moduleExports;
 });
 function App() {
-  const [loading, setLoading] = useState(false);
   const [tried, setTried] = useState(false);
   const { active, activate } = useWeb3React();
   useEffect(() => {
     Aos.init({ duration: 1000 });
   }, []);
   useEffect(() => {
-    setLoading(true);
     injected.isAuthorized().then((isAuthorized) => {
       if (isAuthorized) {
         activate(injected, undefined, true).catch(() => {
@@ -57,7 +55,7 @@ function App() {
         setTried(true);
       }
     })
-  }, []);
+  }, [activate]);
 
   useEffect(() => {
     if (!tried && active) {

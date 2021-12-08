@@ -81,7 +81,7 @@
 .wallet_left {
   min-height: 100vh;
   display: flex;
-  align-items: start;
+  align-items: flex-start;
   background-image: url('../../assets/images/wall_login_bg.png');
   background-position: bottom;
   background-size: cover;

@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Header } from "../../components";
 import Marbles from "../../assets/images/MARBLES.png";
 import { TinyDollor, TinyBnb, TinyStar, Thunder } from "../../assets/svg";
@@ -64,7 +64,7 @@ const HeroSection = ({checkAuth}) => {
   const [active, setActive] = useState(false);
   const [bnb, setBnb] = useState(0.05);
   // const [betInput, setBetInput] = useState([]);
-  const betInput = {betId:"", account:"", bet:""};
+  const betInput = useMemo(()=>{return {betId:"", account:"", bet:""}},[]);
   
   // const address = "0x931CB6D74471858e3729406073738223693e506e";
   const address = "0x23426f3be2c4Ea2deBF4222cf79FE7F94062b59B";
@@ -105,19 +105,19 @@ const HeroSection = ({checkAuth}) => {
     setCurrentActive(i);
   };
 
-  const listenEvent = async () => {
+  const listenEvent = useCallback(async () => {
     if (account && chainId === 56) {
       let contract = await new library.eth.Contract(BetAbi.abi, BetAddress);
     }
     
-  }
+  }, [library, account, chainId]);
 
   useEffect(() => {
     async function fetchData() {
       await listenEvent();
     }
     fetchData();
-  }, [betInput])
+  }, [betInput, listenEvent])
 
   const oddEvenHandler = async (value) => {
     let contract = await new library.eth.Contract(Abi, address);
