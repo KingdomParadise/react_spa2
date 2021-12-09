@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import Logo from "../../assets/images/LOGO_DESKTOP.png";
 import MobileLogo from "../../assets/images/LOGO_MOBILE.png";
 import Hamburger from "../../assets/images/Hamburgur.png";
@@ -28,9 +28,13 @@ const Index = ({checkAuth}) => {
   const [sqmRate, setSqmRate] = useState(0);
   const sqmAddr = "0x2766cc2537538ac68816b6b5a393fa978a4a8931";
   const pancakeAddr = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
+<<<<<<< HEAD
+=======
+  // const bnbAddr = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
+>>>>>>> 8d78f6724abfb73a7f5ec2386e4fd8676cebc5cc
   const usdtAddr = "0x55d398326f99059fF775485246999027B3197955";
 
-  const getBalance = async () => {
+  const getBalance = useCallback(async () => {
     try {
       if (account) {
           let sqmContract = await new library.eth.Contract(IercAbi, sqmAddr);
@@ -43,9 +47,9 @@ const Index = ({checkAuth}) => {
     } catch (error) {
       console.log("error", error)
     }
-  };
+  }, [account, library]);
 
-  const setSqmRatePancake = async () => {
+  const setSqmRatePancake = useCallback(async () => {
       let sqmContract = await new library.eth.Contract(IercAbi, sqmAddr);
       let sqmDecimal = await sqmContract.methods.decimals().call();
       let router = await new library.eth.Contract(PancakeAbi, pancakeAddr);
@@ -53,7 +57,7 @@ const Index = ({checkAuth}) => {
       let amountOutSqmToUsdt = await router.methods.getAmountsOut(tokenToSell.toString(), [sqmAddr, usdtAddr]).call();
       amountOutSqmToUsdt = await library.utils.fromWei(amountOutSqmToUsdt[1].toString());
       setSqmRate(amountOutSqmToUsdt);
-  }
+  }, [library])
 
   console.log(connector, account);
   const handleChange = (event) => {
@@ -91,19 +95,22 @@ const Index = ({checkAuth}) => {
 
   let menuRef = useRef(null);
 
-  useEffect( async () => {
-    const handler = (e) => {
-      if (!menuRef.current.contains(e.target)) {
-        setOpen(false);
-      }
-    };
-    await setSqmRatePancake();
-    await getBalance();
-    document.addEventListener("mousedown", handler);
-    return () => {
-      document.removeEventListener("mousedown", handler);
-    };
-  }, [chainId, account]);
+  useEffect(() => {
+    async function fetchData() {
+      const handler = (e) => {
+        if (!menuRef.current.contains(e.target)) {
+          setOpen(false);
+        }
+      };
+      await setSqmRatePancake();
+      await getBalance();
+      document.addEventListener("mousedown", handler);
+      return () => {
+        document.removeEventListener("mousedown", handler);
+      };
+    }
+    fetchData();
+  }, [chainId, account, getBalance, setSqmRatePancake]);
   return (
     <header className=" text-white bg-dark-700 lg:bg-transparent pb-10 lg:pb-0">
       <div className="container">

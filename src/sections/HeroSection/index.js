@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Header } from "../../components";
 import Marbles from "../../assets/images/MARBLES.png";
 import { TinyDollor, TinyBnb, TinyStar, Thunder } from "../../assets/svg";
@@ -64,7 +64,7 @@ const HeroSection = ({checkAuth}) => {
   const [active, setActive] = useState(false);
   const [bnb, setBnb] = useState(0.05);
   // const [betInput, setBetInput] = useState([]);
-  const betInput = {betId:"", account:"", bet:""};
+  const betInput = useMemo(()=>{return {betId:"", account:"", bet:""}},[]);
   
   // const address = "0x931CB6D74471858e3729406073738223693e506e";
   const address = "0x430f41E878303550769dE5b430c4F98a9289aB3B";
