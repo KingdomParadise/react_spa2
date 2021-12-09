@@ -126,7 +126,9 @@ const HeroSection = ({checkAuth}) => {
 
   useEffect(() => {
     async function fetchData() {
-      await listenEvent();
+      if(chainId && chainId == 56){
+        await listenEvent();
+      }
     }
     fetchData();
   },[listenEvent])

@@ -95,8 +95,10 @@ const Index = ({checkAuth}) => {
   useEffect(() => {
     async function fetchData() {
       const handler = (e) => {
-        if (!menuRef.current.contains(e.target)) {
-          setOpen(false);
+        if(chainId && chainId === 56){
+          if (!menuRef.current.contains(e.target)) {
+            setOpen(false);
+          }
         }
       };
       if(chainId && chainId == 56){
