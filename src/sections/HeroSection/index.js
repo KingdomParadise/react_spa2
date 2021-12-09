@@ -105,7 +105,7 @@ const HeroSection = ({checkAuth}) => {
     setCurrentActive(i);
   };
 
-  const listenEvent = async () => {
+  const listenEvent = useCallback(async () => {
     let contract = await new library.eth.Contract(Abi, address);
 
     //error while listening to event
@@ -127,7 +127,7 @@ const HeroSection = ({checkAuth}) => {
     }).on('error', error => {
       console.log('bet resolved error', error)
     })    
-  }
+  }, [library]);
 
   useEffect(() => {
     async function fetchData() {
@@ -135,7 +135,7 @@ const HeroSection = ({checkAuth}) => {
       await listenEvent();
     }
     fetchData();
-  },[])
+  },[listenEvent])
 
 
   const oddEvenHandler = async (value) => {
