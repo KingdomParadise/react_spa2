@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { useEffect, useState, useRef, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { Header } from "../../components";
 import Marbles from "../../assets/images/MARBLES.png";
 import { TinyDollor, TinyBnb, TinyStar, Thunder } from "../../assets/svg";
@@ -28,7 +28,6 @@ import SelectBnb2 from "../../assets/audios/select-bet-2.mp3";
 import SelectBnb3 from "../../assets/audios/select-bet-3.mp3";
 import { useWeb3React } from "@web3-react/core";
 import Abi from "../../assets/abi/squidabi.json";
-
 
 const data = [
   {
@@ -122,16 +121,16 @@ const HeroSection = ({checkAuth}) => {
     }).on('error', error => {
       console.log('bet resolved error', error)
     })    
-  }, [library]);
+  }, [library, betInput]);
 
   useEffect(() => {
     async function fetchData() {
-      if(chainId && chainId == 56){
+      if(chainId && chainId === 56){
         await listenEvent();
       }
     }
     fetchData();
-  },[listenEvent])
+  },[listenEvent, chainId])
 
 
   const oddEvenHandler = async (value) => {
