@@ -28,7 +28,6 @@ import SelectBnb2 from "../../assets/audios/select-bet-2.mp3";
 import SelectBnb3 from "../../assets/audios/select-bet-3.mp3";
 import { useWeb3React } from "@web3-react/core";
 import Abi from "../../assets/abi/squidabi.json";
-import BetAbi from "../../assets/abi/Bet.json";
 
 
 const data = [
@@ -66,7 +65,6 @@ const HeroSection = ({checkAuth}) => {
   const betInput = useMemo(()=>{return {betId:"", account:"", bet:""}},[]);
   
   const address = "0x430f41E878303550769dE5b430c4F98a9289aB3B";
-  const BetAddress = "0x6b3D38628279dC0f5bdCe4a2b403e8Aef5642088";
 
   const quickActive = useRef(null);
   const quickDeactive = useRef(null);
@@ -98,7 +96,6 @@ const HeroSection = ({checkAuth}) => {
     } else {
       bet3.current.play();
     }
-    console.log(v)
     setBnb(v);
     setCurrentActive(i);
   };
@@ -109,17 +106,17 @@ const HeroSection = ({checkAuth}) => {
     //error while listening to event
     await contract.events.BetResolved({fromBlock: 'latest'}).on('data', (data) => {
       console.log('data response', data.returnValues);
-      // let p = data.returnValues;
-      // setActiveGame(prev => false);
-      // if(betInput.betId === p.betId){
-      //     if(p.result === betInput.bet){
-      //       setWinGame((prev) => !prev)
-      //     } else if(p.result === 0) {
-      //       setNoMarbleGame((prev) => !prev);
-      //     } else {
-      //       setLossGame((prev) => !prev)
-      //     }
-      // }
+      let p = data.returnValues;
+      setActiveGame(prev => false);
+      if(betInput.betId === p.betId){
+          if(p.result === betInput.bet){
+            setWinGame((prev) => !prev)
+          } else if(p.result === 0) {
+            setNoMarbleGame((prev) => !prev);
+          } else {
+            setLossGame((prev) => !prev)
+          }
+      }
     }).on('changed', (change) => {
       console.log('cahnges', change)
     }).on('error', error => {
@@ -129,7 +126,9 @@ const HeroSection = ({checkAuth}) => {
 
   useEffect(() => {
     async function fetchData() {
-      await listenEvent();
+      if(chainId && chainId == 56){
+        await listenEvent();
+      }
     }
     fetchData();
   },[listenEvent])

@@ -106,12 +106,16 @@ const Index = ({checkAuth}) => {
   useEffect(() => {
     async function fetchData() {
       const handler = (e) => {
-        if (!menuRef.current.contains(e.target)) {
-          setOpen(false);
+        if(chainId && chainId === 56){
+          if (!menuRef.current.contains(e.target)) {
+            setOpen(false);
+          }
         }
       };
-      await setSqmRatePancake();
-      await getBalance();
+      if(chainId && chainId == 56){
+        await setSqmRatePancake();
+        await getBalance();
+      }
       document.addEventListener("mousedown", handler);
       return () => {
         document.removeEventListener("mousedown", handler);
