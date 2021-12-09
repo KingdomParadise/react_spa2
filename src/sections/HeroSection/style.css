@@ -4,6 +4,7 @@
   background-position: center center;
   background-size: cover;
 }
+
 /* @media (max-width: 768px) {
   .hero-section {
   }
@@ -23,9 +24,11 @@
   align-items: center;
   justify-content: center;
 }
+
 .minecraft-dollor {
   position: relative;
 }
+
 .minecraft-dollor::after,
 .minecraft-dollor::before {
   position: absolute;
@@ -36,10 +39,12 @@
 
   background-color: #fcec60;
 }
+
 .minecraft-dollor::after {
   transform: translate(-50%, 100%);
   top: 0;
 }
+
 .minecraft-dollor::before {
   bottom: 0;
   transform: translate(-50%, -100%);
@@ -58,6 +63,7 @@
   cursor: pointer;
   position: relative;
 }
+
 .even p,
 .odd p {
   position: absolute;
@@ -65,12 +71,15 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .even.disabled,
 .odd.disabled {
   opacity: .4 !important;
   pointer-events: none;
   background: #5c5938;
+  cursor: not-allowed;
 }
+
 .even-hover,
 .odd-hover {
   position: absolute;
@@ -81,6 +90,7 @@
   opacity: 0;
   transition: opacity linear 0.3s;
 }
+
 .even-bg,
 .odd-bg {
   transition: opacity linear 0.3s;
@@ -95,6 +105,7 @@
 .odd:hover .odd-bg {
   opacity: 0;
 }
+
 .even:hover .even-hover,
 .odd:hover .odd-hover {
   opacity: 1;
@@ -105,29 +116,31 @@
     background-image: url(../../assets/images/EVEN_BG-HOVER.png);
   }
 }
+
 .odd:hover {
   background-image: url(../../assets/images/ODD_BG-HOVER.png);
 }
+
 @keyframes backgroundIMG2 {
   100% {
     background-image: url(../../assets/images/ODD_BG-HOVER.png);
   }
 }
+
 .odd {
   background-image: url(../../assets/images/ODD_BG.png);
   background-position: right bottom;
 }
+
 .or {
-  clip-path: polygon(
-    30% 0%,
-    70% 0%,
-    100% 30%,
-    100% 70%,
-    70% 100%,
-    30% 100%,
-    0% 70%,
-    0% 30%
-  );
+  clip-path: polygon(30% 0%,
+      70% 0%,
+      100% 30%,
+      100% 70%,
+      70% 100%,
+      30% 100%,
+      0% 70%,
+      0% 30%);
 
   background-color: #f3ba2f;
   padding: 10px;
@@ -148,6 +161,7 @@
   color: black;
   font-weight: bold;
 }
+
 .tick {
   background-color: white;
   width: 30px;
@@ -166,4 +180,14 @@
 
 .select-bnb.active .tick {
   display: flex;
+}
+
+@media (max-width: 768px) {
+  .even, .odd {
+    padding: 90px 10px;
+    font-size: 42px;
+  }
+  .cus_mobile_adjust{
+
+  }
 }

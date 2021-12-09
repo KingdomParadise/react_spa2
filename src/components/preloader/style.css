@@ -205,6 +205,9 @@
 .font_big {
   font-size: 50px;
 }
+.progress{
+  background: #0000;
+}
 
 @media (max-width: 767px) {
   .coinl, .coinr, .wallet_list {

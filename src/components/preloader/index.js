@@ -41,10 +41,10 @@ const Index = ({ loading }) => {
   return (
     <>
       <div className="flex preloader" data-aos="zoom-out">
-        <div className="flex justify-center mt-10 md:mt-0 md:items-center w-full h-full">
+        <div className="flex justify-center md:mt-0 md:items-center w-full h-full align-items-center">
           <div>
             <div data-aos="fade-up" data-aos-delay="700">
-              <img src={Logo} alt="" className=" mx-auto" />
+              <img src={Logo} alt="" className=" mx-auto mb-4" />
             </div>
             <h2 className="title" data-aos="fade-up" data-aos-delay="700">
               <span>#SQM</span> Present the first game
@@ -52,7 +52,7 @@ const Index = ({ loading }) => {
             <p
               data-aos="fade-up"
               data-aos-delay="700"
-              className="text-xl font-medium yellow"
+              className="text-xl font-medium yellow px-4"
             >
               Place your bet in BNB then guess if there is an even number or odd
               number of marbles.
