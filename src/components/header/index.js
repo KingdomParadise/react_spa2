@@ -18,25 +18,36 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { injected, walletConnect } from "../../hooks/wallet/Connectors";
 import IercAbi from "../../assets/abi/erc20.json";
 import PancakeAbi from "../../assets/abi/pancakeAbi.json";
+import { QUERY_ME } from "../../utils/queries";
+import { useQuery } from '@apollo/client';
 
 const Index = ({checkAuth}) => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [eqxBalance, setEqxBalance] = useState(0);
   const { connector, account, chainId, activate, library} = useWeb3React();
+  const [me, setMe] = useState({rewardClaimed: 0, score: 0});
   const [sqmBalance, setSqmBalance] = useState(0.00);
   const [sqmRate, setSqmRate] = useState(0);
   const sqmAddr = "0x2766cc2537538ac68816b6b5a393fa978a4a8931";
   const pancakeAddr = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
-  // const bnbAddr = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
   const usdtAddr = "0x55d398326f99059fF775485246999027B3197955";
+
+  const { loading: playerQueryLoading, data: player } = useQuery(QUERY_ME, { variables: { id: account } });
+
+  useEffect(()=>{
+    if (!playerQueryLoading && player && player.player) {
+      setMe(player.player);
+    }
+  }, [playerQueryLoading, player]);
 
   const getBalance = useCallback(async () => {
     try {
       if (account) {
           let sqmContract = await new library.eth.Contract(IercAbi, sqmAddr);
           let sqmBln = await sqmContract.methods.balanceOf(account).call();
-          setSqmBalance(sqmBln);
+          let sqmDecimal = await sqmContract.methods.decimals().call();
+          setSqmBalance(sqmBln/(10**sqmDecimal));
           let balance = await library.eth.getBalance(account);
           setEqxBalance(await library.utils.fromWei(balance, "ether"));
       }
@@ -95,12 +106,16 @@ const Index = ({checkAuth}) => {
   useEffect(() => {
     async function fetchData() {
       const handler = (e) => {
-        if (!menuRef.current.contains(e.target)) {
-          setOpen(false);
+        if(chainId && chainId === 56){
+          if (!menuRef.current.contains(e.target)) {
+            setOpen(false);
+          }
         }
       };
-      await setSqmRatePancake();
-      await getBalance();
+      if(chainId && chainId == 56){
+        await setSqmRatePancake();
+        await getBalance();
+      }
       document.addEventListener("mousedown", handler);
       return () => {
         document.removeEventListener("mousedown", handler);
@@ -152,7 +167,7 @@ const Index = ({checkAuth}) => {
                 </div>
                 <p className="text-base font-medium">Rank 23</p>
                 <p className="text-sm  text-gray-500 ml-2 font-normal">
-                  Est. Payout 2032
+                  Est. Payout {me.score}
                 </p>
               </div>
             </div>
@@ -178,11 +193,11 @@ const Index = ({checkAuth}) => {
           </div>
           <div className="hidden lg:flex flex-shrink-0 items-center ">
             {/*<img src={Music} alt="" className="w-8 " />*/}
-            <ol class="equaliser">
-              <li class="equaliser-bar"></li>
-              <li class="equaliser-bar"></li>
-              <li class="equaliser-bar"></li>
-              <li class="equaliser-bar"></li>
+            <ol className="equaliser">
+              <li className="equaliser-bar"></li>
+              <li className="equaliser-bar"></li>
+              <li className="equaliser-bar"></li>
+              <li className="equaliser-bar"></li>
             </ol>
             <div className="w-8 mx-4">
               <img src={Languages} alt="languages" className="w-full " />
@@ -211,20 +226,20 @@ const Index = ({checkAuth}) => {
             <div className="mr-4">
               <img src={Metamask} alt="" />
             </div>
-            <p className="text-sm">0x71C...8976F</p>
+            <p className="text-sm">{account ? account.slice(0, 5) : ''}...{account ? account.slice(-5) : ''}</p>
           </div>
           <div className="flex items-center py-3">
             <div className="mr-4">
               <img src={Bnb} alt="" />
             </div>
-            <p className="text-base  font-medium">1.2921 BNB</p>
+            <p className="text-base  font-medium">{(parseFloat(eqxBalance)).toFixed(4)} BNB</p>
           </div>
           <div className="flex items-center py-3">
             <div className="mr-4">
               <img src={Custom_dollor} alt="" />
             </div>
-            <p className="text-base font-medium">7,721 SQM</p>
-            <p className="text-sm  text-gray-500 ml-2 font-normal">$51,263</p>
+            <p className="text-base font-medium">{(parseFloat(sqmBalance)).toFixed(2)} SQM</p>
+            <p className="text-sm  text-gray-500 ml-2 font-normal">${((parseFloat(sqmBalance * sqmRate))).toLocaleString('en-US', {minimumFractionDigits: 2})}</p>
           </div>
           <div className="flex items-center py-3">
             <div className="  px-2 mr-4">
@@ -232,7 +247,7 @@ const Index = ({checkAuth}) => {
             </div>
             <p className="text-base font-medium">Rank 23</p>
             <p className="text-sm  text-gray-500 ml-2 font-normal">
-              Score 2032
+              Est. Payout {me.score}
             </p>
           </div>
         </div>

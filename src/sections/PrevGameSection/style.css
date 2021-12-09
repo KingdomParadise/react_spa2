@@ -12,6 +12,13 @@
   line-height: 16px;
 }
 
+.prev-game-card .prev-game-card-btm-right {
+  color: #D80027;
+}
+.prev-game-card .prev-game-card-btm-right svg * {
+  fill: #D80027;
+}
+
 .prev-game-card.win .prev-game-card-btm-right {
   color: #38c669;
 }
