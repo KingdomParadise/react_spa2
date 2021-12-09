@@ -28,10 +28,7 @@ const Index = ({checkAuth}) => {
   const [sqmRate, setSqmRate] = useState(0);
   const sqmAddr = "0x2766cc2537538ac68816b6b5a393fa978a4a8931";
   const pancakeAddr = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
-<<<<<<< HEAD
-=======
   // const bnbAddr = "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c";
->>>>>>> 8d78f6724abfb73a7f5ec2386e4fd8676cebc5cc
   const usdtAddr = "0x55d398326f99059fF775485246999027B3197955";
 
   const getBalance = useCallback(async () => {
