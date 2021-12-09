@@ -15,7 +15,7 @@ import { setContext } from '@apollo/client/link/context';
 import Preloader from './components/preloader';
 
 const httpLink = createHttpLink({
-  uri: 'https://api.polarsync.app/subgraphs/id/QmammBhGH4bB5VhRhe46BWamNgj5ygXPDQ2V76d9mtbKk6',
+  uri: process.env.REACT_APP_THEGRAPH_URI,
 });
 
 const authLink = setContext((_, { headers }) => {
