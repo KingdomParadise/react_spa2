@@ -112,7 +112,7 @@ const Index = ({checkAuth}) => {
           }
         }
       };
-      if(chainId && chainId == 56){
+      if(chainId && chainId === 56){
         await setSqmRatePancake();
         await getBalance();
       }
