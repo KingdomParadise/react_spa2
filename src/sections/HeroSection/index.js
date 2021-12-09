@@ -67,7 +67,7 @@ const HeroSection = ({checkAuth}) => {
   const betInput = {betId:"", account:"", bet:""};
   
   // const address = "0x931CB6D74471858e3729406073738223693e506e";
-  const address = "0x23426f3be2c4Ea2deBF4222cf79FE7F94062b59B";
+  const address = "0x430f41E878303550769dE5b430c4F98a9289aB3B";
   const BetAddress = "0x6b3D38628279dC0f5bdCe4a2b403e8Aef5642088";
 
   const quickActive = useRef(null);
@@ -106,18 +106,37 @@ const HeroSection = ({checkAuth}) => {
   };
 
   const listenEvent = async () => {
-    if (account && chainId === 56) {
-      let contract = await new library.eth.Contract(BetAbi.abi, BetAddress);
-    }
-    
+    let contract = await new library.eth.Contract(Abi, address);
+
+    //error while listening to event
+    await contract.events.BetResolved({fromBlock: 'latest'}).on('data', (data) => {
+      console.log('data response', data.returnValues);
+      // let p = data.returnValues;
+      // setActiveGame(prev => false);
+      // if(betInput.betId === p.betId){
+      //     if(p.result === betInput.bet){
+      //       setWinGame((prev) => !prev)
+      //     } else if(p.result === 0) {
+      //       setNoMarbleGame((prev) => !prev);
+      //     } else {
+      //       setLossGame((prev) => !prev)
+      //     }
+      // }
+    }).on('changed', (change) => {
+      console.log('cahnges', change)
+    }).on('error', error => {
+      console.log('bet resolved error', error)
+    })    
   }
 
   useEffect(() => {
     async function fetchData() {
+      console.log('listening to event')
       await listenEvent();
     }
     fetchData();
-  }, [betInput])
+  },[])
+
 
   const oddEvenHandler = async (value) => {
     let contract = await new library.eth.Contract(Abi, address);
@@ -125,24 +144,14 @@ const HeroSection = ({checkAuth}) => {
     
     setActiveGame(prev => true);
 
-    await contract.events.BetResolved({}).on('data', (data) => {
-        console.log('data response', data);
-        let p = data.returnValues;
-        setActiveGame(prev => false);
-        if(betInput.betId === p.betId){
-            if(p.result === betInput.bet){
-              setWinGame((prev) => !prev)
-            } else if(p.result === 0) {
-              setNoMarbleGame((prev) => !prev);
-            } else {
-              setLossGame((prev) => !prev)
-            }
-        }
-    })
-
+    // gasprice high but sending bnb rejected
     await contract.methods.placeBet(value).send({from: account, value: bnbValue, gasPrice: 7000000000})
-    .on('error', (error) => {setActiveGame(prev => false)})
+    .on('error', (error) => {setActiveGame(prev => false); console.log('error bet place ', error)})
+    .on('changed', (changedata) => {
+      console.log('bet place change data', changedata)
+    })
     .then((receipt) => {
+        console.log('receipt', receipt)
         let r = receipt.events.BetPlaced.returnValues;
         let betId = r.betId;
         let account = r.player;
