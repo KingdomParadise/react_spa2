@@ -213,20 +213,20 @@ const Index = ({checkAuth}) => {
             <div className="mr-4">
               <img src={Metamask} alt="" />
             </div>
-            <p className="text-sm">0x71C...8976F</p>
+            <p className="text-sm">{account.substring(0, 4)}....{account.substring(38)}</p>
           </div>
           <div className="flex items-center py-3">
             <div className="mr-4">
               <img src={Bnb} alt="" />
             </div>
-            <p className="text-base  font-medium">1.2921 BNB</p>
+            <p className="text-base  font-medium">{(parseFloat(eqxBalance)).toFixed(4)} BNB</p>
           </div>
           <div className="flex items-center py-3">
             <div className="mr-4">
               <img src={Custom_dollor} alt="" />
             </div>
-            <p className="text-base font-medium">7,721 SQM</p>
-            <p className="text-sm  text-gray-500 ml-2 font-normal">$51,263</p>
+            <p className="text-base font-medium">{(parseFloat(sqmBalance)).toFixed(2)} SQM</p>
+            <p className="text-sm  text-gray-500 ml-2 font-normal">${((parseFloat(sqmBalance * sqmRate))).toLocaleString('en-US', {minimumFractionDigits: 2})}</p>
           </div>
           <div className="flex items-center py-3">
             <div className="  px-2 mr-4">

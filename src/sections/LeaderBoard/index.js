@@ -200,7 +200,7 @@ const PrevGame = () => {
                   alt=""
                 />
                 <p className=" ml-4 font-bold text-base sm:text-xl account">
-                  {v.id}
+                  {v.id.substring(0,4)}...{v.id.substring(38)}
                 </p>
               </div>
               <div className="flex mt-8 md:mt-0 md:col-span-6 lg:col-span-5 items-center md:pr-4 max-w-sm  justify-between w-11/12 mx-auto md:mx-auto md:w-full md:max-w-none">
