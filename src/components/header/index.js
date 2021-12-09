@@ -159,6 +159,7 @@ const Index = ({checkAuth}) => {
             </>
           }
           {(!account || chainId !== 56) && 
+          <div>
             <button className="connect-wallet-btn" onClick={()=>{
               if (account) {
                 sessionStorage.removeItem('connect_later');
@@ -168,6 +169,7 @@ const Index = ({checkAuth}) => {
               }
               
             }}>Connect wallet</button>
+            </div>
           }
           <div className="lg:hidden">
             <button onClick={handleChange}>
