@@ -22,7 +22,7 @@ const GameStartModal = ({ activeGame, setActiveGame, gameHandler }) => {
             <i className="far fa-clock mr-3"></i>
             <p>This may take up to 30 seconds</p>
           </div>
-          <button className="bg-white rounded-md py-3 px-8 md:py-4 md:px-10 mt-6 md:mt-10 text-black font-bold text-base md:text-xl ">
+          <button onClick={gameHandler} className="bg-white rounded-md py-3 px-8 md:py-4 md:px-10 mt-6 md:mt-10 text-black font-bold text-base md:text-xl ">
             Play again
           </button>
         </div>
