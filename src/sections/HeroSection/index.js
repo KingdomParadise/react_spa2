@@ -63,10 +63,8 @@ const HeroSection = ({checkAuth}) => {
   const [marbleGame, setMarbleGame] = useState(false);
   const [active, setActive] = useState(false);
   const [bnb, setBnb] = useState(0.05);
-  // const [betInput, setBetInput] = useState([]);
   const betInput = useMemo(()=>{return {betId:"", account:"", bet:""}},[]);
   
-  // const address = "0x931CB6D74471858e3729406073738223693e506e";
   const address = "0x430f41E878303550769dE5b430c4F98a9289aB3B";
   const BetAddress = "0x6b3D38628279dC0f5bdCe4a2b403e8Aef5642088";
 
@@ -131,7 +129,6 @@ const HeroSection = ({checkAuth}) => {
 
   useEffect(() => {
     async function fetchData() {
-      console.log('listening to event')
       await listenEvent();
     }
     fetchData();
