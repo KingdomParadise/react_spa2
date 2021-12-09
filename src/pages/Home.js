@@ -11,12 +11,12 @@ import { useWeb3React } from "@web3-react/core";
 
 const Home = () => {
   const { account, chainId } = useWeb3React();
-  const { loading, data: bet, error } = useQuery(QUERY_BET, { variables: { id: '' } });
+  const { loading, data: bet, error } = useQuery(QUERY_BET, { variables: { id: '0x03dbf44d15350e9fd1a1046b6022f89ebeb3ac09afdb737f6d58a45ade85d7bc' } });
   const [later, setLater] = useState(false);
   if (error) console.log(`Error! ${error.message}`);
   useEffect(()=>{
     if (!loading){
-      console.log(bet, '----');
+      console.log(bet)
     }
   }, [loading, bet]);
 

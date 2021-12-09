@@ -178,11 +178,11 @@ const Index = ({checkAuth}) => {
           </div>
           <div className="hidden lg:flex flex-shrink-0 items-center ">
             {/*<img src={Music} alt="" className="w-8 " />*/}
-            <ol class="equaliser">
-              <li class="equaliser-bar"></li>
-              <li class="equaliser-bar"></li>
-              <li class="equaliser-bar"></li>
-              <li class="equaliser-bar"></li>
+            <ol className="equaliser">
+              <li className="equaliser-bar"></li>
+              <li className="equaliser-bar"></li>
+              <li className="equaliser-bar"></li>
+              <li className="equaliser-bar"></li>
             </ol>
             <div className="w-8 mx-4">
               <img src={Languages} alt="languages" className="w-full " />

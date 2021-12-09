@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GreenTag from "../../assets/images/GreenTag.png";
 import RedTag from "../../assets/images/RedTag.png";
 import Winner1 from "../../assets/images/winner1.png";
@@ -10,10 +10,12 @@ import Dollor from "../../assets/images/dollor.svg";
 import Dollor2 from "../../assets/images/Dollor2.png";
 import Dollor3 from "../../assets/images/Dollor3.png";
 import Dollor4 from "../../assets/images/Dollor4.png";
+import { useQuery } from '@apollo/client';
+import { QUERY_PLAYERS } from "../../utils/queries";
 
 import "./style.css";
 
-const data = [
+/*const data = [
   {
     account: "0x8Df64...0E3dEB7F7B6",
     score: 1039,
@@ -99,11 +101,19 @@ const data = [
     score: 1039,
     payout: 5_536,
   },
-];
+];*/
 
 const PrevGame = () => {
   const [currentView, setCurrentView] = useState(10);
+  const [data, setData] = useState([]);
+  const { loading, data: res, error } = useQuery(QUERY_PLAYERS, { variables: { orderBy: 'score' } });
 
+  useEffect(()=>{
+    if (!loading && res) {
+      setData(res.players);
+    }
+  }, [loading, res])
+  
   return (
     <section className="leader-board py-20">
       <div className="container text-center">
@@ -143,7 +153,7 @@ const PrevGame = () => {
           </div>
         </div>
         <div className="cards-wrapper mt-20 md:mt-0">
-          {data.slice(0, currentView).map((v, i) => (
+          {data && data.slice(0, currentView).map((v, i) => (
             <div
               key={i}
               className={`ml-1  rounded-3xl grid grid-cols-1 md:grid-cols-12 mt-8 relative winner-card text-brown ${
@@ -190,7 +200,7 @@ const PrevGame = () => {
                   alt=""
                 />
                 <p className=" ml-4 font-bold text-base sm:text-xl account">
-                  {v.account}
+                  {v.id}
                 </p>
               </div>
               <div className="flex mt-8 md:mt-0 md:col-span-6 lg:col-span-5 items-center md:pr-4 max-w-sm  justify-between w-11/12 mx-auto md:mx-auto md:w-full md:max-w-none">
@@ -229,7 +239,7 @@ const PrevGame = () => {
                       alt=""
                     />
                     <span className="inline-block ml-2 font-bold ">
-                      ${v.payout - i * 100} $SQM
+                      ${v.rewardClaimed - i * 100} $SQM
                     </span>
                   </p>
                 </div>
@@ -247,13 +257,13 @@ const PrevGame = () => {
                     alt=""
                   />
                   <span className="inline-block ml-2 font-bold ">
-                    ${v.payout - i * 100} $SQM
+                    ${v.rewardClaimed - i * 100} $SQM
                   </span>
                 </p>
               </div>
             </div>
           ))}
-          <div
+          {data && data.length > 10 && <div
             className={`cards-wrapper-overlay  ${
               currentView === data.length ? "hidden" : "flex"
             } items-end justify-center`}
@@ -266,6 +276,7 @@ const PrevGame = () => {
               <i className="fas fa-arrow-down"></i>
             </button>
           </div>
+          }
         </div>
       </div>
     </section>

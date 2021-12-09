@@ -17,3 +17,13 @@ export const QUERY_BET = gql`
     }
   }
 `;
+
+export const QUERY_PLAYERS = gql`
+  query getPlayers($orderBy: String) {
+    players(orderBy: $orderBy) {
+      id
+      rewardClaimed
+      score
+    }
+  }
+`;
