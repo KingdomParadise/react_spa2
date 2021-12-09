@@ -75,7 +75,7 @@
 .even.disabled,
 .odd.disabled {
   opacity: .4 !important;
-  pointer-events: none;
+  cursor: not-allowed;
   background: #5c5938;
   cursor: not-allowed;
 }
@@ -118,7 +118,7 @@
 }
 
 .odd:hover {
-  background-image: url(../../assets/images/ODD_BG-HOVER.png);
+  /*background-image: url(../../assets/images/ODD_BG-HOVER.png);*/
 }
 
 @keyframes backgroundIMG2 {
