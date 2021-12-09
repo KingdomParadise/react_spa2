@@ -210,7 +210,9 @@
   .coinl, .coinr, .wallet_list {
     display: none;
   }
-
+  .wallet_content {
+    padding: 20px 50px;
+  }
   .wallet_left {
     margin-top: -40vh !important;
     align-items: end;

@@ -272,13 +272,13 @@ const HeroSection = ({checkAuth}) => {
                         ? "border-yellow-400"
                         : "border-dark-400"
                     }`}
-                  >
+                  > 
                     <img
                       src={currentActive === i ? TinyBnbImgBlack : TinyBnbImg}
                       className="w-6"
                       alt=""
                     />
-                    <p className=" mt-2 md:mt-0 md:ml-2 font-medium text-xl">
+                    <p className=" mt-2 md:mt-0 md:ml-2 font-medium text-xl text-nowrap">
                       {v.bnb}
                     </p>
                   </div>
