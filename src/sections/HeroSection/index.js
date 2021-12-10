@@ -258,9 +258,9 @@ const HeroSection = ({ checkAuth }) => {
 
 
           {/* Pending Approve  Transactin */}
-          <div className="pending_approve">
+          <div className="pending_approve d-none">
             <div className="mb-2 d-flex justify-content-center text-yellow">
-            <div class="loader"></div>Pending
+              <div class="loader"></div>Pending
             </div>
             <h2 className="mb-4 text-2xl fw-bold ">
               Approve the transaction <br />through your wallet
@@ -268,6 +268,18 @@ const HeroSection = ({ checkAuth }) => {
             <p>Squid Moon games are decentralized apps on the BSC blockchain. You can view the smart contract <Link>hear</Link></p>
           </div>
 
+
+
+          {/* Pending Approve  Error sec */}
+          <div className="pending_approve error_sec">
+            <div className="mb-2 text-danger">
+              Faild
+            </div>
+            <h2 className="mb-4 text-2xl fw-bold ">
+              Transaction was not approved
+            </h2>
+            <span className="close_btn">Close</span>
+          </div>
 
 
           <div className="mt-16  flex lg:items-center lg:justify-between flex-col  lg:flex-row">
