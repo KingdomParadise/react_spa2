@@ -28,29 +28,30 @@ import SelectBnb2 from "../../assets/audios/select-bet-2.mp3";
 import SelectBnb3 from "../../assets/audios/select-bet-3.mp3";
 import { useWeb3React } from "@web3-react/core";
 import Abi from "../../assets/abi/squidabi.json";
+import { Link } from "@mui/material";
 
 const data = [
   {
     bnb: "1 BNB",
-    value:0.05,
+    value: 0.05,
     star: "+100",
     dollor: "+$600 SQM",
   },
   {
     bnb: "2 BNB",
-    value:0.06,
+    value: 0.06,
     star: "+200",
     dollor: "+$1200 SQM",
   },
   {
     bnb: "3 BNB",
-    value:0.07,
+    value: 0.07,
     star: "+300",
     dollor: "+$1800 SQM",
   },
 ];
 
-const HeroSection = ({checkAuth}) => {
+const HeroSection = ({ checkAuth }) => {
   const { account, library, chainId } = useWeb3React();
 
   const [currentActive, setCurrentActive] = useState(-1);
@@ -61,8 +62,8 @@ const HeroSection = ({checkAuth}) => {
   const [marbleGame, setMarbleGame] = useState(false);
   const [active, setActive] = useState(false);
   const [bnb, setBnb] = useState(0.05);
-  const betInput = useMemo(()=>{return {betId:"", account:"", bet:""}},[]);
-  
+  const betInput = useMemo(() => { return { betId: "", account: "", bet: "" } }, []);
+
   const address = "0x430f41E878303550769dE5b430c4F98a9289aB3B";
 
   const quickActive = useRef(null);
@@ -103,49 +104,49 @@ const HeroSection = ({checkAuth}) => {
     let contract = await new library.eth.Contract(Abi, address);
 
     //error while listening to event
-    await contract.events.BetResolved({fromBlock: 'latest'}).on('data', (data) => {
+    await contract.events.BetResolved({ fromBlock: 'latest' }).on('data', (data) => {
       console.log('data response', data.returnValues);
       let p = data.returnValues;
       setActiveGame(prev => false);
-      if(betInput.betId === p.betId){
-          if(p.result === betInput.bet){
-            setWinGame((prev) => !prev)
-          } else if(p.result === 0) {
-            setNoMarbleGame((prev) => !prev);
-          } else {
-            setLossGame((prev) => !prev)
-          }
+      if (betInput.betId === p.betId) {
+        if (p.result === betInput.bet) {
+          setWinGame((prev) => !prev)
+        } else if (p.result === 0) {
+          setNoMarbleGame((prev) => !prev);
+        } else {
+          setLossGame((prev) => !prev)
+        }
       }
     }).on('changed', (change) => {
       console.log('cahnges', change)
     }).on('error', error => {
       console.log('bet resolved error', error)
-    })    
+    })
   }, [library, betInput]);
 
   useEffect(() => {
     async function fetchData() {
-      if(chainId && chainId === 56){
+      if (chainId && chainId === 56) {
         await listenEvent();
       }
     }
     fetchData();
-  },[listenEvent, chainId])
+  }, [listenEvent, chainId])
 
 
   const oddEvenHandler = async (value) => {
     let contract = await new library.eth.Contract(Abi, address);
     let bnbValue = await library.utils.toWei(bnb.toString(), "ether");
-    
+
     setActiveGame(prev => true);
 
     // gasprice high but sending bnb rejected
-    await contract.methods.placeBet(value).send({from: account, value: bnbValue, gasPrice: 7000000000})
-    .on('error', (error) => {setActiveGame(prev => false); console.log('error bet place ', error)})
-    .on('changed', (changedata) => {
-      console.log('bet place change data', changedata)
-    })
-    .then((receipt) => {
+    await contract.methods.placeBet(value).send({ from: account, value: bnbValue, gasPrice: 7000000000 })
+      .on('error', (error) => { setActiveGame(prev => false); console.log('error bet place ', error) })
+      .on('changed', (changedata) => {
+        console.log('bet place change data', changedata)
+      })
+      .then((receipt) => {
         console.log('receipt', receipt)
         let r = receipt.events.BetPlaced.returnValues;
         let betId = r.betId;
@@ -154,7 +155,7 @@ const HeroSection = ({checkAuth}) => {
         betInput.betId = betId;
         betInput.account = account;
         betInput.bet = bet;
-    }) 
+      })
 
 
   }
@@ -171,7 +172,7 @@ const HeroSection = ({checkAuth}) => {
     setTimeout(() => {
       setActiveGame((prev) => !prev);
       setLossGame((prev) => !prev);
-      
+
     }, 3000);
   };
   // const evenHandler = () => {
@@ -192,7 +193,7 @@ const HeroSection = ({checkAuth}) => {
   return (
     <>
       <section className="bg-dark-500  min-h-screen pb-14 hero-section relative">
-        <Header checkAuth={checkAuth}/>
+        <Header checkAuth={checkAuth} />
         <div className="container">
           <div className="mx-auto hidden lg:flex items-center justify-center w-full my-10 md:my-4">
             <div
@@ -209,18 +210,19 @@ const HeroSection = ({checkAuth}) => {
           <div>
             <h1 className="font-mineCraft text-4xl mx-auto text-center hidden lg:block text-yellow my-8">
               <span className="minecraft-dollor">S</span>{" "}
-              <CountUp end={200000} duration={2} separator=','/> USD IN PRIZES
+              <CountUp end={200000} duration={2} separator=',' /> USD IN PRIZES
             </h1>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative d-none">
             <div
               className={(chainId === 56 && account) ? 'even' : 'even disabled'}
               role="button"
               onClick={() => {
                 if (chainId === 56 && account) {
-                  oddEvenHandler(2)}
+                  oddEvenHandler(2)
                 }
+              }
               }
               data-aos="fade-up"
             >
@@ -235,8 +237,9 @@ const HeroSection = ({checkAuth}) => {
               role="button"
               onClick={() => {
                 if (chainId === 56 && account) {
-                  oddEvenHandler(3)}
+                  oddEvenHandler(3)
                 }
+              }
               }
               data-aos="fade-up"
               data-aos-delay="400"
@@ -252,14 +255,28 @@ const HeroSection = ({checkAuth}) => {
             </div>
           </div>
 
+
+
+          {/* Pending Approve  Transactin */}
+          <div className="pending_approve">
+            <div className="mb-2 d-flex justify-content-center text-yellow">
+            <div class="loader"></div>Pending
+            </div>
+            <h2 className="mb-4 text-2xl fw-bold ">
+              Approve the transaction <br />through your wallet
+            </h2>
+            <p>Squid Moon games are decentralized apps on the BSC blockchain. You can view the smart contract <Link>hear</Link></p>
+          </div>
+
+
+
           <div className="mt-16  flex lg:items-center lg:justify-between flex-col  lg:flex-row">
             <p className="text-yellow text-2xl font-bold">Select BNB amount</p>
             <div className="grid grid-cols-3 gap-4 items-center justify-between lg:my-0 my-8">
               {data.map((v, i) => (
                 <div
-                  className={`bg-dark-300 py-1 rounded-xl  cursor-pointer relative select-bnb ${
-                    currentActive === i ? "active" : ""
-                  }`}
+                  className={`bg-dark-300 py-1 rounded-xl  cursor-pointer relative select-bnb ${currentActive === i ? "active" : ""
+                    }`}
                   key={i}
                   onClick={() => activeHandler(i, v.value)}
                 >
@@ -267,12 +284,11 @@ const HeroSection = ({checkAuth}) => {
                     <i className="fas fa-check"></i>
                   </div>
                   <div
-                    className={`flex  flex-col md:flex-row md:items-center px-4 py-2  pr-3  border-b  ${
-                      currentActive === i
-                        ? "border-yellow-400"
-                        : "border-dark-400"
-                    }`}
-                  > 
+                    className={`flex  flex-col md:flex-row md:items-center px-4 py-2  pr-3  border-b  ${currentActive === i
+                      ? "border-yellow-400"
+                      : "border-dark-400"
+                      }`}
+                  >
                     <img
                       src={currentActive === i ? TinyBnbImgBlack : TinyBnbImg}
                       className="w-6"
@@ -308,9 +324,8 @@ const HeroSection = ({checkAuth}) => {
             </div>
             <div
               onClick={quickPlayHandler}
-              className={`border ${
-                active ? " border-yellow" : " border-white "
-              } flex items-center p-4 lg:py-7 lg:px-6 rounded-xl cursor-pointer justify-center transition-all`}
+              className={`border ${active ? " border-yellow" : " border-white "
+                } flex items-center p-4 lg:py-7 lg:px-6 rounded-xl cursor-pointer justify-center transition-all`}
             >
               {active ? <img src={YellowThunder} alt="" /> : <Thunder />}{" "}
               <p className={`${active ? "text-yellow" : ""}  select-none ml-2`}>
