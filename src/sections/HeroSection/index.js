@@ -192,7 +192,7 @@ const HeroSection = ({ checkAuth }) => {
   };
   return (
     <>
-      <section className="bg-dark-500  min-h-screen pb-14 hero-section relative">
+      <section className="bg-dark-500  min-h-screen pb-14 hero-section relative cus_mobile_adjust">
         <Header checkAuth={checkAuth} />
         <div className="container">
           <div className="mx-auto hidden lg:flex items-center justify-center w-full my-10 md:my-4">
@@ -214,7 +214,7 @@ const HeroSection = ({ checkAuth }) => {
             </h1>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative d-none">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative">
             <div
               className={(chainId === 56 && account) ? 'even' : 'even disabled'}
               role="button"
@@ -231,6 +231,7 @@ const HeroSection = ({ checkAuth }) => {
                 <img src={EvenBgHover} alt="" className="w-full even-hover" />
               </>}
               <p>Even</p>
+              
             </div>
             <div
               className={(chainId === 56 && account) ? 'odd' : 'odd disabled'}
@@ -249,6 +250,7 @@ const HeroSection = ({ checkAuth }) => {
                 <img src={OddBgHover} alt="" className="w-full odd-hover" />
               </>}
               <p>Odd</p>
+              <div className="tooltips"><span className="text-danger">Choose bet amount to play</span></div>
             </div>
             <div className="or hidden md:flex">
               <p className="font-bold text-xl">OR</p>
@@ -271,7 +273,7 @@ const HeroSection = ({ checkAuth }) => {
 
 
           {/* Pending Approve  Error sec */}
-          <div className="pending_approve error_sec">
+          <div className="pending_approve error_sec d-none">
             <div className="mb-2 text-danger">
               Faild
             </div>

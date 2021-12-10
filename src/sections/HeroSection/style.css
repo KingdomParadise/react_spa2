@@ -75,7 +75,6 @@
 .even.disabled,
 .odd.disabled {
   opacity: .4 !important;
-  cursor: not-allowed;
   background: #5c5938;
   cursor: not-allowed;
 }
@@ -232,21 +231,51 @@
     transform: rotate(360deg);
   }
 }
-.error_sec h2{
+
+.error_sec h2 {
   padding: 0px 30px;
 }
-.error_sec .close_btn{
+
+.error_sec .close_btn {
   padding: 5px 15px;
   border-radius: 30px;
-  border:1px solid #fff;
+  border: 1px solid #fff;
   font-size: 14px;
+}
+
+.odd:hover .tooltips {
+  display: block;
+}
+
+.tooltips {
+  position: absolute;
+  font-size: 14px;
+  text-align: center;
+  width: 100%;
+  bottom: 32px;
+  display: none;
+}
+
+.tooltips span {
+  background-color: #fff;
+  padding: 5px 15px;
+  border-radius: 5px;
 }
 
 @media (max-width: 768px) {
   .even, .odd {
-    padding: 90px 10px;
-    font-size: 42px;
+    padding: 70px 10px;
+    font-size: 35px;
+    border-radius: 18px;
   }
 
-  .cus_mobile_adjust {}
+  .cus_mobile_adjust .mt-14 {
+      margin-top: 1.5rem;
+    }
+    .cus_mobile_adjust .gap-10 {
+      gap: 1.5rem;
+  }
+  .cus_mobile_adjust .mt-16 {
+    margin-top: 1.5rem;
+}
 }
