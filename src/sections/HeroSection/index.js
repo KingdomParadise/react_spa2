@@ -62,6 +62,8 @@ const HeroSection = ({ checkAuth }) => {
   const [marbleGame, setMarbleGame] = useState(false);
   const [active, setActive] = useState(false);
   const [bnb, setBnb] = useState(0.05);
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState(false);
   const betInput = useMemo(() => { return { betId: "", account: "", bet: "" } }, []);
 
   const address = "0x430f41E878303550769dE5b430c4F98a9289aB3B";
@@ -113,6 +115,8 @@ const HeroSection = ({ checkAuth }) => {
           setWinGame((prev) => !prev)
         } else if (p.result === 0) {
           setNoMarbleGame((prev) => !prev);
+        } else if (p.result === 1) {
+          setProcessing(true);
         } else {
           setLossGame((prev) => !prev)
         }
@@ -120,7 +124,8 @@ const HeroSection = ({ checkAuth }) => {
     }).on('changed', (change) => {
       console.log('cahnges', change)
     }).on('error', error => {
-      console.log('bet resolved error', error)
+      console.log('bet resolved error', error);
+      setError(true);
     })
   }, [library, betInput]);
 
@@ -142,7 +147,7 @@ const HeroSection = ({ checkAuth }) => {
 
     // gasprice high but sending bnb rejected
     await contract.methods.placeBet(value).send({ from: account, value: bnbValue, gasPrice: 7000000000 })
-      .on('error', (error) => { setActiveGame(prev => false); console.log('error bet place ', error) })
+      .on('error', (error) => { setActiveGame(prev => false); console.log('error bet place ', error); setError(true); })
       .on('changed', (changedata) => {
         console.log('bet place change data', changedata)
       })
@@ -214,7 +219,7 @@ const HeroSection = ({ checkAuth }) => {
             </h1>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative">
+          {!processing && !error && <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative">
             <div
               className={(chainId === 56 && account) ? 'even' : 'even disabled'}
               role="button"
@@ -256,33 +261,31 @@ const HeroSection = ({ checkAuth }) => {
               <p className="font-bold text-xl">OR</p>
             </div>
           </div>
-
-
-
-          {/* Pending Approve  Transactin */}
-          <div className="pending_approve d-none">
-            <div className="mb-2 d-flex justify-content-center text-yellow">
+          }
+          {processing &&
+            <div className="pending_approve">
+              <div className="mb-2 d-flex justify-content-center text-yellow">
               <div class="loader"></div>Pending
+              </div>
+              <h2 className="mb-4 text-2xl fw-bold ">
+                Approve the transaction <br />through your wallet
+              </h2>
+              <p>Squid Moon games are decentralized apps on the BSC blockchain. You can view the smart contract <Link>hear</Link></p>
             </div>
-            <h2 className="mb-4 text-2xl fw-bold ">
-              Approve the transaction <br />through your wallet
-            </h2>
-            <p>Squid Moon games are decentralized apps on the BSC blockchain. You can view the smart contract <Link>hear</Link></p>
-          </div>
+          }
 
 
-
-          {/* Pending Approve  Error sec */}
-          <div className="pending_approve error_sec d-none">
+          {error &&
+          <div className="pending_approve error_sec">
             <div className="mb-2 text-danger">
               Faild
             </div>
             <h2 className="mb-4 text-2xl fw-bold ">
               Transaction was not approved
             </h2>
-            <span className="close_btn">Close</span>
+            <span className="close_btn" onClick={()=>setError(false)}>Close</span>
           </div>
-
+          }
 
           <div className="mt-16  flex lg:items-center lg:justify-between flex-col  lg:flex-row">
             <p className="text-yellow text-2xl font-bold">Select BNB amount</p>
