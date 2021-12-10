@@ -107,7 +107,7 @@ const Index = ({checkAuth}) => {
     async function fetchData() {
       const handler = (e) => {
         if(chainId && chainId === 56){
-          if (!menuRef.current.contains(e.target)) {
+          if (!menuRef.current || !menuRef.current.contains(e.target)) {
             setOpen(false);
           }
         }
