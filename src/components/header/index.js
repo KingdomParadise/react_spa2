@@ -18,17 +18,28 @@ import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import { injected, walletConnect } from "../../hooks/wallet/Connectors";
 import IercAbi from "../../assets/abi/erc20.json";
 import PancakeAbi from "../../assets/abi/pancakeAbi.json";
+import { QUERY_ME } from "../../utils/queries";
+import { useQuery } from '@apollo/client';
 
 const Index = ({checkAuth}) => {
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [eqxBalance, setEqxBalance] = useState(0);
   const { connector, account, chainId, activate, library} = useWeb3React();
+  const [me, setMe] = useState({rewardClaimed: 0, score: 0});
   const [sqmBalance, setSqmBalance] = useState(0.00);
   const [sqmRate, setSqmRate] = useState(0);
   const sqmAddr = "0x2766cc2537538ac68816b6b5a393fa978a4a8931";
   const pancakeAddr = "0x10ED43C718714eb63d5aA57B78B54704E256024E";
   const usdtAddr = "0x55d398326f99059fF775485246999027B3197955";
+
+  const { loading: playerQueryLoading, data: player } = useQuery(QUERY_ME, { variables: { id: account } });
+
+  useEffect(()=>{
+    if (!playerQueryLoading && player && player.player) {
+      setMe(player.player);
+    }
+  }, [playerQueryLoading, player]);
 
   const getBalance = useCallback(async () => {
     try {
@@ -156,7 +167,7 @@ const Index = ({checkAuth}) => {
                 </div>
                 <p className="text-base font-medium">Rank 23</p>
                 <p className="text-sm  text-gray-500 ml-2 font-normal">
-                  Est. Payout 2032
+                  Est. Payout {me.score}
                 </p>
               </div>
             </div>
@@ -213,7 +224,7 @@ const Index = ({checkAuth}) => {
             <div className="mr-4">
               <img src={Metamask} alt="" />
             </div>
-            <p className="text-sm">{account.substring(0, 4)}....{account.substring(38)}</p>
+            <p className="text-sm">{account ? account.slice(0, 5) : ''}...{account ? account.slice(-5) : ''}</p>
           </div>
           <div className="flex items-center py-3">
             <div className="mr-4">
@@ -234,7 +245,7 @@ const Index = ({checkAuth}) => {
             </div>
             <p className="text-base font-medium">Rank 23</p>
             <p className="text-sm  text-gray-500 ml-2 font-normal">
-              Score 2032
+              Est. Payout {me.score}
             </p>
           </div>
         </div>

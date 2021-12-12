@@ -27,3 +27,28 @@ export const QUERY_PLAYERS = gql`
     }
   }
 `;
+
+export const QUERY_ME = gql`
+ query getMe($id: ID) {
+  player(id: $id) {
+    id
+    rewardClaimed
+    score
+  }
+ }
+`;
+
+export const QUERY_MY_BETS = gql`
+ query getMyBets($player: ID, $first: Int) {
+  bets(first: $first, where: {player: $player}) {
+    id
+    amount
+    bet
+    player {
+      rewardClaimed
+      score
+    }
+    result
+  }
+ }
+`;

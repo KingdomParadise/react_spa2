@@ -1,11 +1,14 @@
 /* eslint-disable no-unused-vars */
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import { TinyBnb, TinyStar, TinyDollor } from "../../assets/svg";
 import dollor from "../../assets/images/CUSTOM_DOLLOR_TINY_green.png";
 import BnbWhite from "../../assets/images/BNBWHITE.png";
+import { useWeb3React } from "@web3-react/core";
+import { useQuery } from '@apollo/client';
+import { QUERY_MY_BETS } from "../../utils/queries";
 import "./style.css";
 
-const data = [
+/*const data = [
   {
     bet: "Odd",
     bnb: 1,
@@ -86,9 +89,19 @@ const data = [
     star: "+23",
     dollor: "+512",
   },
-];
+];*/
 
 const PrevGame = () => {
+  const [data, setData] = useState([]);
+  const { account } = useWeb3React();
+  const { loading: betsQueryLoading, data: bets } = useQuery(QUERY_MY_BETS, { variables: { player: account, first: 10 } });
+
+  useEffect(()=>{
+    if (!betsQueryLoading && bets) {
+      setData(bets.bets);
+    }
+  }, [betsQueryLoading, bets]);
+
   const scrollContainer = useRef();
   if (scrollContainer.current) {
     console.log(scrollContainer.current);
@@ -99,7 +112,7 @@ const PrevGame = () => {
   }
   return (
     <section className="prev-game">
-      <div className="container relative">
+      {data.length !== 0 && <div className="container relative">
         <h2 className="font-bold text-2xl"> Yours previous games</h2>
         <div
           className="flex items-center mt-6 overflow-auto game-card-container"
@@ -109,18 +122,18 @@ const PrevGame = () => {
             <div
               key={i}
               className={`prev-game-card rounded-2xl mr-8 flex-shrink-0 ${
-                v.result[0].win ? "win" : ""
+                v.result === v.bet ? "win" : ""
               }`}
             >
               <div className="pb-2 pt-2 px-4 pr-24 bg-dark-700 rounded-t-2xl ">
                 <h4 className="font-bold text-3xl">Bet: {v.bet}</h4>
                 <div className="flex items-center">
                   <img src={BnbWhite} alt="" />
-                  <p className="text-base font-bold mx-1">{v.bnb} BNB</p>
-                  <span>~512 SQM</span>
+                  <p className="text-base font-bold mx-1">{v.amount} BNB</p>
+                  <span>~{v.rewardClaimed} SQM</span>
                 </div>
               </div>
-              {v.pending ? (
+              {v.result === 'PENDING' ? (
                 <div className="prev-game-card-btm pb-2 pt-2 px-4 w-full">
                   <p className="font-bold text-base">Result</p>
                   <div className="flex items items-center text-xs mt-1">
@@ -135,17 +148,17 @@ const PrevGame = () => {
                   <div>
                     <p className="font-bold text-base">Result</p>
                     <div className="flex items items-center text-xs mt-1">
-                      <p className="">Odd/Win</p>
+                      <p className="">{v.result} / Win</p>
                     </div>
                   </div>
                   <div className="flex items-end text-base prev-game-card-btm-right">
                     <div className="flex items-center">
                       <TinyStar />
-                      <p className="text-xs ml-1">+23</p>
+                      <p className="text-xs ml-1">{v.result === v.bet ? "+" : "-"}{v.score}</p>
                     </div>
                     <div className="flex items-center ml-2">
                       <img src={dollor} alt="" />
-                      <p className="text-xs ml-1">+512 SQM</p>
+                      <p className="text-xs ml-1">{v.result === v.bet ? "+" : "-"}{v.rewardClaimed} SQM</p>
                     </div>
                   </div>
                 </div>
@@ -153,7 +166,7 @@ const PrevGame = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div>}
     </section>
   );
 };

@@ -11,7 +11,8 @@ import Dollor2 from "../../assets/images/Dollor2.png";
 import Dollor3 from "../../assets/images/Dollor3.png";
 import Dollor4 from "../../assets/images/Dollor4.png";
 import { useQuery } from '@apollo/client';
-import { QUERY_PLAYERS } from "../../utils/queries";
+import { QUERY_ME, QUERY_PLAYERS } from "../../utils/queries";
+import { useWeb3React } from "@web3-react/core";
 
 import "./style.css";
 
@@ -106,13 +107,22 @@ import "./style.css";
 const PrevGame = () => {
   const [currentView, setCurrentView] = useState(10);
   const [data, setData] = useState([]);
-  const { loading, data: res, error } = useQuery(QUERY_PLAYERS, { variables: { orderBy: 'score' } });
+  const { account } = useWeb3React();
+  const [me, setMe] = useState({rewardClaimed: 0, score: 0});
+  const { loading: playersQueryLoading, data: players } = useQuery(QUERY_PLAYERS, { variables: { orderBy: 'score' } });
+  const { loading: playerQueryLoading, data: player } = useQuery(QUERY_ME, { variables: { id: account } });
 
   useEffect(()=>{
-    if (!loading && res) {
-      setData(res.players);
+    if (!playersQueryLoading && players) {
+      setData(players.players);
     }
-  }, [loading, res])
+  }, [playersQueryLoading, players]);
+
+  useEffect(()=>{
+    if (!playerQueryLoading && player && player.player) {
+      setMe(player.player);
+    }
+  }, [playerQueryLoading, player]);
   
   return (
     <section className="leader-board py-20">
@@ -130,7 +140,7 @@ const PrevGame = () => {
             <div className="ml-4 relative ">
               <img src={RedTag} alt="" />
               <div className="score-tag-content">
-                <h3 className="text-base md:text-xl font-bold">1429</h3>
+                <h3 className="text-base md:text-xl font-bold">{me.score}</h3>
                 <p className="text-xs md:text-sm">Your score</p>
               </div>
             </div>
@@ -200,7 +210,7 @@ const PrevGame = () => {
                   alt=""
                 />
                 <p className=" ml-4 font-bold text-base sm:text-xl account">
-                  {v.id.substring(0,4)}...{v.id.substring(38)}
+                {v.id ? v.id.slice(0, 5) : ''}...{v.id ? v.id.slice(-9) : ''}
                 </p>
               </div>
               <div className="flex mt-8 md:mt-0 md:col-span-6 lg:col-span-5 items-center md:pr-4 max-w-sm  justify-between w-11/12 mx-auto md:mx-auto md:w-full md:max-w-none">
