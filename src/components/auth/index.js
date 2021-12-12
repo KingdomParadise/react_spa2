@@ -2,6 +2,7 @@ import "./../preloader/style.css";
 import { useState } from 'react';
 import Logo from "../../assets/images/LOGO_DESKTOP.png";
 import M_Logo from "../../assets/images/m_logo.png";
+
 import Wicon from "../../assets/images/winner1.png";
 import Coinl from "../../assets/images/coin_l.png";
 import Coinr from "../../assets/images/coin_r.png";
