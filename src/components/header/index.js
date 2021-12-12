@@ -106,13 +106,13 @@ const Index = ({checkAuth}) => {
   useEffect(() => {
     async function fetchData() {
       const handler = (e) => {
-        if(chainId && chainId.toString() === process.env.REACT_APP_CHAIN_ID){
+        if(account && chainId && chainId.toString() === process.env.REACT_APP_CHAIN_ID){
           if (!menuRef.current || !menuRef.current.contains(e.target)) {
             setOpen(false);
           }
         }
       };
-      if(chainId && chainId.toString() === process.env.REACT_APP_CHAIN_ID){
+      if(account && chainId && chainId.toString() === process.env.REACT_APP_CHAIN_ID){
         await setSqmRatePancake();
         await getBalance();
       }
