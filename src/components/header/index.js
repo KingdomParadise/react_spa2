@@ -106,13 +106,13 @@ const Index = ({checkAuth}) => {
   useEffect(() => {
     async function fetchData() {
       const handler = (e) => {
-        if(chainId && chainId === 56){
+        if(chainId && chainId.toString() === process.env.REACT_APP_CHAIN_ID){
           if (!menuRef.current || !menuRef.current.contains(e.target)) {
             setOpen(false);
           }
         }
       };
-      if(chainId && chainId === 56){
+      if(chainId && chainId.toString() === process.env.REACT_APP_CHAIN_ID){
         await setSqmRatePancake();
         await getBalance();
       }
@@ -133,7 +133,7 @@ const Index = ({checkAuth}) => {
               <img src={MobileLogo} alt="" />
             </picture>
           </div>
-          {account && chainId === 56 &&
+          {account && chainId.toString() === process.env.REACT_APP_CHAIN_ID &&
             <>
             <div className="metamask-mobile flex lg:hidden items-center">
               <div className="mr-4">
@@ -173,7 +173,7 @@ const Index = ({checkAuth}) => {
             </div>
             </>
           }
-          {(!account || chainId !== 56) && 
+          {(!account || chainId.toString() !== process.env.REACT_APP_CHAIN_ID) && 
           <div>
             <button className="connect-wallet-btn" onClick={()=>{
               if (account) {
