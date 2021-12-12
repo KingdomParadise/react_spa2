@@ -107,12 +107,12 @@ const Index = ({checkAuth}) => {
     async function fetchData() {
       const handler = (e) => {
         if(chainId && chainId === 56){
-          if (!menuRef.current.contains(e.target)) {
+          if (!menuRef.current || !menuRef.current.contains(e.target)) {
             setOpen(false);
           }
         }
       };
-      if(chainId && chainId == 56){
+      if(chainId && chainId === 56){
         await setSqmRatePancake();
         await getBalance();
       }
@@ -174,6 +174,7 @@ const Index = ({checkAuth}) => {
             </>
           }
           {(!account || chainId !== 56) && 
+          <div>
             <button className="connect-wallet-btn" onClick={()=>{
               if (account) {
                 sessionStorage.removeItem('connect_later');
@@ -183,6 +184,7 @@ const Index = ({checkAuth}) => {
               }
               
             }}>Connect wallet</button>
+            </div>
           }
           <div className="lg:hidden">
             <button onClick={handleChange}>
@@ -203,7 +205,7 @@ const Index = ({checkAuth}) => {
             <img src={User} alt="USER" className="w-10" />
           </div>
         </div>
-        <div className="  w-full  mx-auto  block lg:hidden">
+        <div className="  w-full  mx-auto  block lg:hidden cus_mobile_adjust">
           <h1 className="font-mineCraft text-3xl md:text-4xl mx-auto text-center text-yellow my-8">
             <span className="minecraft-dollor">S</span>{" "}
             <CountUp end={200000} duration={2} separator=',' /> USD IN PRIZES

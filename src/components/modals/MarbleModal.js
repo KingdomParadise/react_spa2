@@ -14,7 +14,7 @@ const MarbleModal = ({ activeGame, setActiveGame, gameHandler }) => {
           <div className="py-8">
             <div className="mx-auto flex items-center justify-center w-full my-10 md:my-4">
               <div className=" cursor-pointer marble-popup-parent relative">
-                <img src={Marbles} alt="" />
+                <img src={Marbles} alt="" loading="lazy"/>
               </div>
               <p className="font-medium text-2xl ml-3">Marbles</p>
             </div>
@@ -70,7 +70,7 @@ const LeaderCard = () => (
       </div>
     </div>
     <div className=" flex  items-center   md:col-span-6 pl-6">
-      <img src={Winner1} alt="" className="w-8" />
+      <img src={Winner1} alt="" className="w-8" loading="lazy"/>
       <p className=" ml-4 font-bold   account" style={{ fontSize: 10 }}>
         0x864...F7B6
       </p>
@@ -87,7 +87,7 @@ const LeaderCard = () => (
       </p>
 
       <p className="hidden md:flex text-xs  items-center justify-end flex-1 payout">
-        <img src={Dollor} alt="" className="w-3" />
+        <img src={Dollor} alt="" className="w-3" loading="lazy" />
         <span className="inline-block ml-2 font-bold " style={{ fontSize: 10 }}>
           $200 000 SQM
         </span>
