@@ -56,7 +56,7 @@ const data = [
 const HeroSection = ({ checkAuth }) => {
   const { account, library, chainId} = useWeb3React();
 
-  const [currentActive, setCurrentActive] = useState(-1);
+  const [currentActive, setCurrentActive] = useState(0);
   const [activeGame, setActiveGame] = useState(false);
   const [winGame, setWinGame] = useState(false);
   const [lossGame, setLossGame] = useState(false);
@@ -108,12 +108,6 @@ const HeroSection = ({ checkAuth }) => {
     setCurrentActive(i);
   };
 
-  const listenEtherEvent = async () => {
-    let signer = provider.getSigner();
-    let contract = new ethers.Contract(address, Abi, signer);
-
-  }
-
   const listenEvent = useCallback(async () => {
     let contract = await new library.eth.Contract(Abi, address);
 
@@ -144,15 +138,13 @@ const HeroSection = ({ checkAuth }) => {
   useEffect(() => {
     async function fetchData() {
       activeHandler(0, data[0].value)
-      console.log('provider', provider)
-      if (chainId && chainId === 56) {
-        await listenEtherEvent();
-        // await listenEvent();
+      if (account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) {
+        await listenEvent();
       }
     }
     console.log('betinput', betInput)
     fetchData();
-  }, [listenEvent, chainId])
+  }, [listenEvent, chainId, account])
 
 
   // etherjs
@@ -275,17 +267,17 @@ const HeroSection = ({ checkAuth }) => {
 
           {!processing && !error && <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative">
             <div
-              className={(chainId === 56 && account) ? 'even' : 'even disabled'}
+              className={(account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) ? 'even' : 'even disabled'}
               role="button"
               onClick={() => {
-                if (chainId === 56 && account) {
+                if (account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) {
                   etherHandler(2)
                 }
               }
               }
               data-aos="fade-up"
             >
-              {chainId === 56 && account && <>
+              {account && chainId.toString() === process.env.REACT_APP_CHAIN_ID && <>
                 <img src={EvenBg} alt="" className="w-full even-bg" />
                 <img src={EvenBgHover} alt="" className="w-full even-hover" />
               </>}
@@ -293,10 +285,10 @@ const HeroSection = ({ checkAuth }) => {
               
             </div>
             <div
-              className={(chainId === 56 && account) ? 'odd' : 'odd disabled'}
+              className={(account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) ? 'odd' : 'odd disabled'}
               role="button"
               onClick={() => {
-                if (chainId === 56 && account) {
+                if (account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) {
                   etherHandler(3)
                 }
               }
@@ -304,7 +296,7 @@ const HeroSection = ({ checkAuth }) => {
               data-aos="fade-up"
               data-aos-delay="400"
             >
-              {chainId === 56 && account && <>
+              {account && chainId.toString() === process.env.REACT_APP_CHAIN_ID && <>
                 <img src={OddBg} alt="" className="w-full odd-bg" />
                 <img src={OddBgHover} alt="" className="w-full odd-hover" />
               </>}
@@ -319,7 +311,7 @@ const HeroSection = ({ checkAuth }) => {
           {processing &&
             <div className="pending_approve">
               <div className="mb-2 d-flex justify-content-center text-yellow">
-              <div class="loader"></div>Pending
+              <div className="loader"></div>Pending
               </div>
               <h2 className="mb-4 text-2xl fw-bold ">
                 Approve the transaction <br />through your wallet

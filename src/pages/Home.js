@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Layout } from "../components";
 import HeroSection from "../sections/HeroSection";
 import PrevGameSection from "../sections/PrevGameSection";
@@ -12,7 +12,6 @@ import { useWeb3React } from "@web3-react/core";
 const Home = () => {
   const { account, chainId } = useWeb3React();
   const { loading, data: bet, error } = useQuery(QUERY_BET, { variables: { id: '0x03dbf44d15350e9fd1a1046b6022f89ebeb3ac09afdb737f6d58a45ade85d7bc' } });
-  const [later, setLater] = useState(false);
   if (error) console.log(`Error! ${error.message}`);
   useEffect(()=>{
     if (!loading){
@@ -20,16 +19,8 @@ const Home = () => {
     }
   }, [loading, bet]);
 
-  useEffect(()=> {
-    setLater(sessionStorage.getItem('connect_later'));
-  }, [])
-
-  const checkAuth = () => {
-    setLater(sessionStorage.getItem('connect_later'));
-  }
-
-  if (!later && (!account || chainId !== 56)) {
-    return <Auth laterFn={()=>setLater(true)}/>
+  if (account && chainId.toString() !== process.env.REACT_APP_CHAIN_ID) {
+    return <Auth />
   } else {
     return (
       <div
@@ -38,9 +29,9 @@ const Home = () => {
         className="bg-dark-700"
       >
         <Layout>
-          <HeroSection checkAuth={checkAuth}/>
+          <HeroSection />
           <div className="py-20 bg-dark-700 bottom-section">
-            {account && chainId === 56 &&<PrevGameSection />}
+            {account && chainId.toString() === process.env.REACT_APP_CHAIN_ID &&<PrevGameSection />}
             <LeaderBoard />
           </div>
         </Layout>

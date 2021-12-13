@@ -243,10 +243,6 @@
   font-size: 14px;
 }
 
-.odd:hover .tooltips {
-  display: block;
-}
-
 .tooltips {
   position: absolute;
   font-size: 14px;

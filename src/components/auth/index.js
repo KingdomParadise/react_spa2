@@ -2,6 +2,7 @@ import "./../preloader/style.css";
 import { useState } from 'react';
 import Logo from "../../assets/images/LOGO_DESKTOP.png";
 import M_Logo from "../../assets/images/m_logo.png";
+
 import Wicon from "../../assets/images/winner1.png";
 import Coinl from "../../assets/images/coin_l.png";
 import Coinr from "../../assets/images/coin_r.png";
@@ -50,10 +51,10 @@ const Index = ({ loading, laterFn }) => {
     }
   }
 
-  const connectLater = () => {
+  /*const connectLater = () => {
     sessionStorage.setItem('connect_later', true);
     laterFn();
-  }
+  }*/
 
   return (
     <>
@@ -63,7 +64,7 @@ const Index = ({ loading, laterFn }) => {
             <div>
               <div className="p-5 left_content">
                 <img src={M_Logo} alt="" className=" m_logo" />
-                <h1 className="font-mineCraft text-4xl  text-yellow my-8">  <span class="minecraft-dollor">S</span> 200,000 usd in prizes</h1>
+                <h1 className="font-mineCraft text-4xl  text-yellow my-8">  <span className="minecraft-dollor">S</span> 200,000 usd in prizes</h1>
               </div>
             </div>
           </div>
@@ -108,7 +109,7 @@ const Index = ({ loading, laterFn }) => {
                 </div>}
 
                 {/* error Network */}
-                {account && chainId !== 56 && 
+                {account && chainId.toString() !== process.env.REACT_APP_CHAIN_ID && 
                   <div className="wallet_content error_network">
                     <div className="mb-3 ">
                       <h1 className="fw-bold text-danger mb-4">Incorrect Network</h1>
@@ -127,7 +128,7 @@ const Index = ({ loading, laterFn }) => {
               <div>
                 <img src={Coinl} alt="" className="coinl" />
               </div>
-              <div className="align-self-center con_later mb-4" onClick={connectLater}>Connect later</div>
+              {/*<div className="align-self-center con_later mb-4" onClick={connectLater}>Connect later</div>*/}
               <div>
                 <img src={Coinr} alt="" className="coinr" />
               </div>
