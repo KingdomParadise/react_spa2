@@ -29,6 +29,8 @@ import SelectBnb3 from "../../assets/audios/select-bet-3.mp3";
 import { useWeb3React } from "@web3-react/core";
 import Abi from "../../assets/abi/squidabi.json";
 import { Link } from "@mui/material";
+import { ethers } from 'ethers';
+
 
 const data = [
   {
@@ -52,7 +54,7 @@ const data = [
 ];
 
 const HeroSection = ({ checkAuth }) => {
-  const { account, library, chainId } = useWeb3React();
+  const { account, library, chainId} = useWeb3React();
 
   const [currentActive, setCurrentActive] = useState(-1);
   const [activeGame, setActiveGame] = useState(false);
@@ -61,10 +63,14 @@ const HeroSection = ({ checkAuth }) => {
   const [noMarbleGame, setNoMarbleGame] = useState(false);
   const [marbleGame, setMarbleGame] = useState(false);
   const [active, setActive] = useState(false);
-  const [bnb, setBnb] = useState(0.05);
+  const [bnb, setBnb] = useState(0);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(false);
   const betInput = useMemo(() => { return { betId: "", account: "", bet: "" } }, []);
+
+  const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+  const { Interface } = ethers.utils;
 
   const address = "0x430f41E878303550769dE5b430c4F98a9289aB3B";
 
@@ -102,11 +108,17 @@ const HeroSection = ({ checkAuth }) => {
     setCurrentActive(i);
   };
 
+  const listenEtherEvent = async () => {
+    let signer = provider.getSigner();
+    let contract = new ethers.Contract(address, Abi, signer);
+
+  }
+
   const listenEvent = useCallback(async () => {
     let contract = await new library.eth.Contract(Abi, address);
 
     //error while listening to event
-    await contract.events.BetResolved({ fromBlock: 'latest' }).on('data', (data) => {
+    await contract.events.BetResolved({}).on('data', (data) => {
       console.log('data response', data.returnValues);
       let p = data.returnValues;
       setActiveGame(prev => false);
@@ -131,23 +143,65 @@ const HeroSection = ({ checkAuth }) => {
 
   useEffect(() => {
     async function fetchData() {
+      activeHandler(0, data[0].value)
+      console.log('provider', provider)
       if (chainId && chainId === 56) {
-        await listenEvent();
+        await listenEtherEvent();
+        // await listenEvent();
       }
     }
+    console.log('betinput', betInput)
     fetchData();
   }, [listenEvent, chainId])
 
 
+  // etherjs
+  const etherHandler = async (value) => {
+    try {
+      setActiveGame(true)
+      let signer = provider.getSigner();
+      let contract = new ethers.Contract(address, Abi, signer)
+      let SqInterface = new Interface(Abi);
+
+      let bnbValue = ethers.utils.parseEther(bnb.toString());
+      let txHash = await contract.placeBet(value,{value: bnbValue});
+      const receipt = await txHash.wait();
+      if(receipt){
+        console.log('bet confirmation receipt',receipt)
+      }
+    
+      const filter1 = contract.filters.BetPlaced();
+      const filter2 = contract.filters.BetResolved();
+      
+      const event1 = await contract.queryFilter(filter1, receipt.blockNumber)
+      console.log('event 1 bet placed', event1);
+
+      const event2 = await contract.queryFilter(filter2, receipt.blockNumber)
+      console.log('event 2 bet placed', event2);
+    
+    } catch (error) {
+      setActiveGame(false)
+      setError(true)
+      console.log('error message', error)
+    }
+  }
+
+  // web3js
   const oddEvenHandler = async (value) => {
     let contract = await new library.eth.Contract(Abi, address);
     let bnbValue = await library.utils.toWei(bnb.toString(), "ether");
-
+  
     setActiveGame(prev => true);
 
     // gasprice high but sending bnb rejected
+    let txHash;
     await contract.methods.placeBet(value).send({ from: account, value: bnbValue, gasPrice: 7000000000 })
-      .on('error', (error) => { setActiveGame(prev => false); console.log('error bet place ', error); setError(true); })
+      .on('transactionHash', hash => txHash = hash)
+      .catch((e) => { 
+        setActiveGame(prev => false); 
+        console.log('error bet place ', e); 
+        setError(true); 
+      })
       .on('changed', (changedata) => {
         console.log('bet place change data', changedata)
       })
@@ -225,7 +279,7 @@ const HeroSection = ({ checkAuth }) => {
               role="button"
               onClick={() => {
                 if (chainId === 56 && account) {
-                  oddEvenHandler(2)
+                  etherHandler(2)
                 }
               }
               }
@@ -243,7 +297,7 @@ const HeroSection = ({ checkAuth }) => {
               role="button"
               onClick={() => {
                 if (chainId === 56 && account) {
-                  oddEvenHandler(3)
+                  etherHandler(3)
                 }
               }
               }
