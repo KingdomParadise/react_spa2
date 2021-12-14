@@ -1,5 +1,5 @@
 import "./../preloader/style.css";
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Logo from "../../assets/images/LOGO_DESKTOP.png";
 import M_Logo from "../../assets/images/m_logo.png";
 
@@ -9,7 +9,7 @@ import Coinr from "../../assets/images/coin_r.png";
 import SelectWalletModal from "../modals/SelectWalletModal";
 import { injected, walletConnect } from "../../hooks/wallet/Connectors";
 import { useWeb3React } from "@web3-react/core";
-import { WalletConnectConnector } from '@web3-react/walletconnect-connector'
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 
 const Index = ({ loading, laterFn }) => {
   const [show, setShow] = useState(false);
@@ -40,6 +40,10 @@ const Index = ({ loading, laterFn }) => {
       connector.walletConnectProvider = undefined
     }
   }
+
+  const isWalletConnected = useCallback(() => {
+    return account && chainId.toString() === process.env.REACT_APP_CHAIN_ID;
+  },[account, chainId]);
 
   const walletConnector = async () => {
     try {
@@ -77,7 +81,7 @@ const Index = ({ loading, laterFn }) => {
               <div className="col-lg-2"></div>
               <div className="col-lg-8">
                 {/* connect wallet */}
-                {!account && <div className="wallet_content">
+                {!isWalletConnected() && <div className="wallet_content">
                   <div className="wallet_list font12 mb-4">
                     <div className="rank_tag">
                       <div className="ranklist">

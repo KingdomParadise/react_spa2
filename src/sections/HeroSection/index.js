@@ -31,7 +31,6 @@ import Abi from "../../assets/abi/squidabi.json";
 import { Link } from "@mui/material";
 import { ethers } from 'ethers';
 
-
 const data = [
   {
     bnb: "1 BNB",
@@ -96,17 +95,23 @@ const HeroSection = ({ checkAuth }) => {
     setMarbleGame((prev) => !prev);
   };
 
-  const activeHandler = (i, v) => {
-    if (i === 0) {
-      bet1.current.play();
-    } else if (i === 1) {
-      bet2.current.play();
-    } else {
-      bet3.current.play();
+  const activeHandler = (i, v, init = false) => {
+    if (!init) {
+      if (i === 0) {
+        bet1.current.play();
+      } else if (i === 1) {
+        bet2.current.play();
+      } else {
+        bet3.current.play();
+      }
     }
     setBnb(v);
     setCurrentActive(i);
   };
+
+  const isWalletConnected = useCallback(() => {
+    return account && chainId.toString() === process.env.REACT_APP_CHAIN_ID;
+  },[account, chainId]);
 
   const listenEvent = useCallback(async () => {
     let contract = await new library.eth.Contract(Abi, address);
@@ -137,14 +142,13 @@ const HeroSection = ({ checkAuth }) => {
 
   useEffect(() => {
     async function fetchData() {
-      activeHandler(0, data[0].value)
-      if (account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) {
+      activeHandler(0, data[0].value, true)
+      if (isWalletConnected()) {
         await listenEvent();
       }
     }
-    console.log('betinput', betInput)
     fetchData();
-  }, [listenEvent, chainId, account])
+  }, [listenEvent, chainId, account, isWalletConnected])
 
 
   // etherjs
@@ -267,17 +271,17 @@ const HeroSection = ({ checkAuth }) => {
 
           {!processing && !error && <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-14 relative">
             <div
-              className={(account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) ? 'even' : 'even disabled'}
+              className={isWalletConnected() ? 'even' : 'even disabled'}
               role="button"
               onClick={() => {
-                if (account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) {
+                if (isWalletConnected) {
                   etherHandler(2)
                 }
               }
               }
               data-aos="fade-up"
             >
-              {account && chainId.toString() === process.env.REACT_APP_CHAIN_ID && <>
+              {isWalletConnected() && <>
                 <img src={EvenBg} alt="" className="w-full even-bg" />
                 <img src={EvenBgHover} alt="" className="w-full even-hover" />
               </>}
@@ -285,10 +289,10 @@ const HeroSection = ({ checkAuth }) => {
               
             </div>
             <div
-              className={(account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) ? 'odd' : 'odd disabled'}
+              className={isWalletConnected() ? 'odd' : 'odd disabled'}
               role="button"
               onClick={() => {
-                if (account && chainId.toString() === process.env.REACT_APP_CHAIN_ID) {
+                if (isWalletConnected()) {
                   etherHandler(3)
                 }
               }
@@ -296,7 +300,7 @@ const HeroSection = ({ checkAuth }) => {
               data-aos="fade-up"
               data-aos-delay="400"
             >
-              {account && chainId.toString() === process.env.REACT_APP_CHAIN_ID && <>
+              {isWalletConnected() && <>
                 <img src={OddBg} alt="" className="w-full odd-bg" />
                 <img src={OddBgHover} alt="" className="w-full odd-hover" />
               </>}

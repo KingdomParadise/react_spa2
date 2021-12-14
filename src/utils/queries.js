@@ -20,7 +20,7 @@ export const QUERY_BET = gql`
 
 export const QUERY_PLAYERS = gql`
   query getPlayers($orderBy: String) {
-    players(orderBy: $orderBy) {
+    players(orderBy: $orderBy, orderDirection: desc) {
       id
       rewardClaimed
       score

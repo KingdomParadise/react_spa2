@@ -13,6 +13,8 @@ import Dollor4 from "../../assets/images/Dollor4.png";
 import { useQuery } from '@apollo/client';
 import { QUERY_ME, QUERY_PLAYERS } from "../../utils/queries";
 import { useWeb3React } from "@web3-react/core";
+import { ethers } from 'ethers';
+import Abi from "../../assets/abi/squidabi.json";
 
 import "./style.css";
 
@@ -107,15 +109,36 @@ import "./style.css";
 const PrevGame = () => {
   const [currentView, setCurrentView] = useState(10);
   const [data, setData] = useState([]);
+  const [endDate, setEndDate] = useState('');
   const { account } = useWeb3React();
   const [me, setMe] = useState({rewardClaimed: 0, score: 0});
   const { loading: playersQueryLoading, data: players } = useQuery(QUERY_PLAYERS, { variables: { orderBy: 'score' } });
   const { loading: playerQueryLoading, data: player } = useQuery(QUERY_ME, { variables: { id: account } });
+  const address = "0x430f41E878303550769dE5b430c4F98a9289aB3B";
+
+  const getContract = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    let signer = provider.getSigner();
+    let contract = new ethers.Contract(address, Abi, signer);
+    const end = await contract.end();
+    setEndDate(end);
+  }
+
+  const getEndDate = () => {
+    const currDate = Math.floor(Date.now()/1000);
+    const cd = 24 * 60 * 60;
+    const ch = 60 * 60;
+    const t = endDate-currDate;
+    const d = Math.floor(t / cd);
+    const h = Math.floor(t / ch);
+    return d ? `${d} days` : `${h} hours`;
+  }
 
   useEffect(()=>{
     if (!playersQueryLoading && players) {
       setData(players.players);
     }
+    getContract();
   }, [playersQueryLoading, players]);
 
   useEffect(()=>{
@@ -149,7 +172,7 @@ const PrevGame = () => {
             200,000 usd in prizes
           </h2>
           <p className="text-yellow text-base  md:text-2xl mt-4">
-            11 days untill the winners announced
+            {getEndDate()} untill the winners announced
           </p>
         </div>
 
@@ -221,14 +244,14 @@ const PrevGame = () => {
                   <p className="text-xl score">
                     <i className="fas fa-star"></i>
                     <span className="inline-block ml-2 font-bold ">
-                      {v.score - i * 10}
+                      {v.score}
                     </span>
                   </p>
                 </div>
                 <p className="hidden md:block  text-xl score">
                   <i className="fas fa-star"></i>
                   <span className="inline-block ml-2 font-bold ">
-                    {v.score - i * 10}
+                    {v.score}
                   </span>
                 </p>
                 <div className="md:hidden">
@@ -249,7 +272,7 @@ const PrevGame = () => {
                       alt=""
                     />
                     <span className="inline-block ml-2 font-bold ">
-                      ${v.rewardClaimed - i * 100} $SQM
+                      ${v.rewardClaimed ? v.rewardClaimed : 0} $SQM
                     </span>
                   </p>
                 </div>
@@ -267,7 +290,7 @@ const PrevGame = () => {
                     alt=""
                   />
                   <span className="inline-block ml-2 font-bold ">
-                    ${v.rewardClaimed - i * 100} $SQM
+                    ${v.rewardClaimed ? v.rewardClaimed : 0} $SQM
                   </span>
                 </p>
               </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { Layout } from "../components";
 import HeroSection from "../sections/HeroSection";
 import PrevGameSection from "../sections/PrevGameSection";
@@ -19,6 +19,10 @@ const Home = () => {
     }
   }, [loading, bet]);
 
+  const isWalletConnected = useCallback(() => {
+    return account && chainId.toString() === process.env.REACT_APP_CHAIN_ID;
+  },[account, chainId]);
+
   if (account && chainId.toString() !== process.env.REACT_APP_CHAIN_ID) {
     return <Auth />
   } else {
@@ -31,7 +35,7 @@ const Home = () => {
         <Layout>
           <HeroSection />
           <div className="py-20 bg-dark-700 bottom-section">
-            {account && chainId.toString() === process.env.REACT_APP_CHAIN_ID &&<PrevGameSection />}
+            {isWalletConnected() &&<PrevGameSection />}
             <LeaderBoard />
           </div>
         </Layout>

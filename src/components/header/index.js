@@ -41,6 +41,10 @@ const Index = ({checkAuth}) => {
     }
   }, [playerQueryLoading, player]);
 
+  const isWalletConnected = useCallback(() => {
+    return account && chainId.toString() === process.env.REACT_APP_CHAIN_ID;
+  },[account, chainId]);
+
   const getBalance = useCallback(async () => {
     try {
       if (account) {
@@ -106,13 +110,13 @@ const Index = ({checkAuth}) => {
   useEffect(() => {
     async function fetchData() {
       const handler = (e) => {
-        if(account && chainId && chainId.toString() === process.env.REACT_APP_CHAIN_ID){
+        if(isWalletConnected()){
           if (!menuRef.current || !menuRef.current.contains(e.target)) {
             setOpen(false);
           }
         }
       };
-      if(account && chainId && chainId.toString() === process.env.REACT_APP_CHAIN_ID){
+      if(isWalletConnected()){
         await setSqmRatePancake();
         await getBalance();
       }
@@ -122,7 +126,7 @@ const Index = ({checkAuth}) => {
       };
     }
     fetchData();
-  }, [chainId, account, getBalance, setSqmRatePancake]);
+  }, [chainId, account, getBalance, setSqmRatePancake, isWalletConnected]);
   return (
     <header className=" text-white bg-dark-700 lg:bg-transparent pb-10 lg:pb-0">
       <div className="container">
@@ -133,7 +137,7 @@ const Index = ({checkAuth}) => {
               <img src={MobileLogo} alt="" />
             </picture>
           </div>
-          {account && chainId.toString() === process.env.REACT_APP_CHAIN_ID &&
+          {isWalletConnected() &&
             <>
             <div className="metamask-mobile flex lg:hidden items-center">
               <div className="mr-4">
@@ -165,7 +169,7 @@ const Index = ({checkAuth}) => {
                 <div className="mr-4">
                   <img src={Star} alt="" />
                 </div>
-                <p className="text-base font-medium">Rank 23</p>
+                {/*<p className="text-base font-medium">Rank 23</p>*/}
                 <p className="text-sm  text-gray-500 ml-2 font-normal">
                   Est. Payout {me.score}
                 </p>
@@ -245,7 +249,7 @@ const Index = ({checkAuth}) => {
             <div className="  px-2 mr-4">
               <img src={Star} alt="" />
             </div>
-            <p className="text-base font-medium">Rank 23</p>
+            {/*<p className="text-base font-medium">Rank 23</p>*/}
             <p className="text-sm  text-gray-500 ml-2 font-normal">
               Est. Payout {me.score}
             </p>
